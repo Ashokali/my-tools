@@ -174,6 +174,24 @@
   }
   .api-bar input:focus { border-color: var(--accent); }
   .api-bar input::placeholder { color: var(--muted); }
+  .btn-save-key {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 10px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color .2s, background .2s, color .2s;
+  }
+  .btn-save-key:hover { border-color: var(--accent); color: var(--accent); background: rgba(108,71,255,.06); }
+  .btn-save-key.saved { border-color: var(--success); color: var(--success); background: rgba(34,197,94,.06); }
 
   /* ── UPLOAD CARD ── */
   .upload-card {
@@ -417,7 +435,9 @@
     <label>🔑 &nbsp;Your poof.bg API Key</label>
     <div class="input-row">
       <input type="password" id="api-key" placeholder="pk_live_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
+      <button class="btn-save-key" id="save-key-btn" title="Save key to browser storage">💾 Save</button>
     </div>
+    <p id="key-save-msg" style="font-size:.78rem;display:none"></p>
     <p style="font-size:.78rem;color:var(--muted)">Get a free key (100 credits) at <a href="https://dash.poof.bg/auth/sign-up" target="_blank" style="color:var(--accent)">dash.poof.bg</a> — no credit card required.</p>
   </div>
 
@@ -503,6 +523,39 @@
   const downloadBtn= document.getElementById('download-btn');
   const resetBtn   = document.getElementById('reset-btn');
   const apiKeyInp  = document.getElementById('api-key');
+  const saveKeyBtn = document.getElementById('save-key-btn');
+  const keySaveMsg = document.getElementById('key-save-msg');
+
+  /* ── load saved key on startup ── */
+  const savedKey = localStorage.getItem('poof_api_key');
+  if (savedKey) {
+    apiKeyInp.value = savedKey;
+    showKeyMsg('✅ Saved key loaded', 'var(--success)');
+  }
+
+  /* ── save key button ── */
+  saveKeyBtn.addEventListener('click', () => {
+    const key = apiKeyInp.value.trim();
+    if (!key) {
+      localStorage.removeItem('poof_api_key');
+      saveKeyBtn.classList.remove('saved');
+      showKeyMsg('🗑️ Saved key cleared', 'var(--muted)');
+      return;
+    }
+    localStorage.setItem('poof_api_key', key);
+    saveKeyBtn.textContent = '✅ Saved';
+    saveKeyBtn.classList.add('saved');
+    showKeyMsg('✅ Key saved to this browser', 'var(--success)');
+    setTimeout(() => { saveKeyBtn.textContent = '💾 Save'; saveKeyBtn.classList.remove('saved'); }, 2000);
+  });
+
+  function showKeyMsg(text, color) {
+    keySaveMsg.textContent = text;
+    keySaveMsg.style.color = color;
+    keySaveMsg.style.display = '';
+    clearTimeout(keySaveMsg._t);
+    keySaveMsg._t = setTimeout(() => keySaveMsg.style.display = 'none', 3000);
+  }
 
   let selectedFile = null;
 
