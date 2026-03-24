@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BG Eraser — Remove Backgrounds Instantly</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a26;
+    --border: #2a2a3e;
+    --accent: #7c6dff;
+    --accent2: #ff6d8b;
+    --accent3: #6dffda;
+    --text: #f0eeff;
+    --muted: #8888aa;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+  }
+  .bg-mesh {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 10% 20%, rgba(124,109,255,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 90% 80%, rgba(255,109,139,0.08) 0%, transparent 70%);
+  }
+  .container {
+    position: relative; z-index: 1;
+    max-width: 900px; margin: 0 auto; padding: 0 24px 80px;
+  }
+  header {
+    padding: 36px 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-size: 18px; font-weight: 800; letter-spacing: -0.03em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 12px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.8)} }
+  .badge {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+    border: 1px solid var(--border); padding: 4px 12px; border-radius: 100px;
+  }
+  .hero { text-align: center; padding-bottom: 48px; animation: fadeUp .6s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .hero h1 {
+    font-size: clamp(32px, 7vw, 68px); font-weight: 800;
+    line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 14px;
+  }
+  .grad {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--accent3) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero p { font-size: 13px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  .app-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 24px; overflow: hidden;
+    animation: fadeUp .6s .15s ease both;
+  }
+
+  /* API Key section */
+  .api-section {
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(124,109,255,0.04);
+  }
+  .api-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .api-label a {
+    color: var(--accent); text-decoration: none; font-weight: 400;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+  }
+  .api-label a:hover { text-decoration: underline; }
+  .api-row { display: flex; gap: 10px; align-items: center; }
+  .api-input {
+    flex: 1;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); padding: 10px 14px; border-radius: 8px;
+    font-family: 'DM Mono', monospace; font-size: 13px;
+    outline: none; transition: border-color .2s;
+  }
+  .api-input:focus { border-color: var(--accent); }
+  .api-input::placeholder { color: var(--muted); }
+  .btn-save {
+    background: var(--accent); color: white; border: none;
+    padding: 10px 18px; border-radius: 8px;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: all .2s; white-space: nowrap;
+  }
+  .btn-save:hover { background: #9485ff; }
+  .api-saved {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--accent3); display: none; margin-top: 6px;
+  }
+  .api-saved.show { display: block; }
+
+  /* Drop zone */
+  .drop-zone {
+    padding: 52px 32px; text-align: center; cursor: pointer;
+    border-bottom: 1px solid var(--border); transition: background .2s;
+  }
+  .drop-zone:hover, .drop-zone.drag-over { background: rgba(124,109,255,0.04); }
+  .drop-zone.disabled { opacity: .5; pointer-events: none; }
+  .drop-icon { width: 56px; height: 56px; margin: 0 auto 18px; color: var(--muted); transition: all .2s; }
+  .drop-zone:hover .drop-icon, .drop-zone.drag-over .drop-icon { color: var(--accent); transform: translateY(-4px); }
+  .drop-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .drop-sub { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 22px; }
+  .btn-upload {
+    background: var(--accent); color: white; border: none;
+    padding: 11px 26px; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: all .2s;
+    box-shadow: 0 0 20px rgba(124,109,255,.3);
+  }
+  .btn-upload:hover { background: #9485ff; transform: translateY(-1px); box-shadow: 0 0 32px rgba(124,109,255,.5); }
+  .formats { margin-top: 14px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  input[type="file"] { display: none; }
+
+  /* Processing */
+  .process-panel { display: none; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .process-panel.active { display: block; }
+  .process-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .process-title { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .progress-bar { height: 3px; background: var(--border); border-radius: 100px; overflow: hidden; }
+  .progress-fill {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    width: 0%; transition: width .4s ease;
+    box-shadow: 0 0 10px var(--accent);
+  }
+  .progress-label { display: flex; justify-content: space-between; margin-top: 10px; }
+  .progress-text { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
+  .progress-pct { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
+
+  /* Error */
+  .error-toast {
+    display: none; margin: 0 32px 0; padding: 12px 16px;
+    border-radius: 8px; border: 1px solid rgba(255,109,139,.3);
+    background: rgba(255,109,139,.08); color: var(--accent2);
+    font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.6;
+  }
+  .error-toast.active { display: block; margin-bottom: 24px; }
+
+  /* Results */
+  .results-panel { display: none; padding: 32px; }
+  .results-panel.active { display: block; }
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .result-slot {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--border); background: var(--surface);
+    position: relative; min-height: 200px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .result-label {
+    position: absolute; top: 10px; left: 10px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    background: rgba(10,10,15,.8); color: var(--muted);
+    padding: 3px 8px; border-radius: 4px; z-index: 2;
+    backdrop-filter: blur(4px);
+  }
+  .result-slot img { width: 100%; display: block; max-height: 320px; object-fit: contain; }
+  .checker-bg {
+    background-image:
+      linear-gradient(45deg,#1e1e2e 25%,transparent 25%),
+      linear-gradient(-45deg,#1e1e2e 25%,transparent 25%),
+      linear-gradient(45deg,transparent 75%,#1e1e2e 75%),
+      linear-gradient(-45deg,transparent 75%,#1e1e2e 75%);
+    background-size: 16px 16px;
+    background-position: 0 0,0 8px,8px -8px,-8px 0;
+    background-color: #2a2a3e;
+  }
+
+  /* BG options */
+  .bg-options { margin-bottom: 24px; }
+  .bg-options-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+  }
+  .bg-swatches { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .swatch {
+    width: 30px; height: 30px; border-radius: 7px;
+    cursor: pointer; border: 2px solid transparent; transition: all .15s;
+  }
+  .swatch:hover { transform: scale(1.1); }
+  .swatch.selected { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,109,255,.3); }
+  .swatch-transparent {
+    background-image: linear-gradient(45deg,#555 25%,transparent 25%),linear-gradient(-45deg,#555 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#555 75%),linear-gradient(-45deg,transparent 75%,#555 75%);
+    background-size: 10px 10px; background-position: 0 0,0 5px,5px -5px,-5px 0; background-color: #333;
+  }
+  .color-input-wrap { position: relative; width: 30px; height: 30px; }
+  .color-input-wrap label {
+    width: 30px; height: 30px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px dashed var(--border); cursor: pointer; font-size: 16px; transition: all .15s;
+  }
+  .color-input-wrap label:hover { border-color: var(--accent); }
+  .color-input-wrap input[type="color"] { position: absolute; opacity: 0; width: 0; height: 0; }
+
+  /* Actions */
+  .actions { display: flex; gap: 12px; }
+  .btn-download {
+    flex: 1; background: linear-gradient(135deg, var(--accent), #9485ff);
+    color: white; border: none; padding: 13px 24px; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all .2s; box-shadow: 0 0 20px rgba(124,109,255,.25);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-download:hover { transform: translateY(-1px); box-shadow: 0 0 32px rgba(124,109,255,.45); }
+  .btn-reset {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--border); padding: 13px 20px; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-reset:hover { border-color: var(--muted); color: var(--text); }
+
+  .credits-info {
+    margin-top: 16px; padding: 12px 16px;
+    border-radius: 8px; border: 1px solid var(--border);
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+  }
+
+  /* Features */
+  .features {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1px; background: var(--border); border-top: 1px solid var(--border);
+  }
+  .feature { background: var(--card); padding: 18px 22px; display: flex; align-items: flex-start; gap: 10px; }
+  .feature-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .feature-title { font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+  .feature-desc { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+  @media(max-width:600px){
+    .results-grid{grid-template-columns:1fr}
+    .features{grid-template-columns:1fr}
+    header{flex-direction:column;gap:10px;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="container">
+  <header>
+    <div class="logo"><div class="logo-dot"></div>BG Eraser</div>
+    <div class="badge">Remove.bg API · Free 50/mo</div>
+  </header>
+
+  <div class="hero">
+    <h1>Remove Backgrounds<br><span class="grad">Instantly.</span></h1>
+    <p>// paste your remove.bg API key below to get started</p>
+  </div>
+
+  <div class="app-card">
+    <!-- API Key -->
+    <div class="api-section">
+      <div class="api-label">
+        Remove.bg API Key
+        <a href="https://www.remove.bg/api#pricing" target="_blank">get free key (50 images/month) →</a>
+      </div>
+      <div class="api-row">
+        <input type="password" class="api-input" id="apiKeyInput" placeholder="Paste your API key here…">
+        <button class="btn-save" onclick="saveApiKey()">Save Key</button>
+      </div>
+      <div class="api-saved" id="apiSaved">✓ Key saved — ready to remove backgrounds!</div>
+    </div>
+
+    <!-- Drop Zone -->
+    <div class="drop-zone disabled" id="dropZone">
+      <div class="drop-icon">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="14" width="48" height="36" rx="4" stroke="currentColor" stroke-width="2"/>
+          <circle cx="22" cy="26" r="5" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 38 L20 28 L30 36 L40 24 L56 38" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M32 50 L32 58 M28 54 L32 58 L36 54" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="drop-title">Drop an image here</div>
+      <div class="drop-sub" id="dropSub">Save your API key above first</div>
+      <button class="btn-upload" onclick="document.getElementById('fileInput').click()">Choose Image</button>
+      <div class="formats">PNG · JPG · WEBP · up to 12MB</div>
+      <input type="file" id="fileInput" accept="image/*">
+    </div>
+
+    <!-- Processing -->
+    <div class="process-panel" id="processPanel">
+      <div class="process-header">
+        <div class="process-title">Processing via Remove.bg</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label">
+        <span class="progress-text" id="progressText">Sending to API…</span>
+        <span class="progress-pct" id="progressPct">0%</span>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="error-toast" id="errorToast"></div>
+
+    <!-- Results -->
+    <div class="results-panel" id="resultsPanel">
+      <div class="results-grid">
+        <div class="result-slot">
+          <div class="result-label">ORIGINAL</div>
+          <img id="originalImg" alt="Original">
+        </div>
+        <div class="result-slot checker-bg" id="resultSlot">
+          <div class="result-label">BG REMOVED</div>
+          <img id="resultImg" alt="Background Removed">
+        </div>
+      </div>
+
+      <div class="bg-options">
+        <div class="bg-options-title">Background Fill</div>
+        <div class="bg-swatches" id="swatches">
+          <div class="swatch swatch-transparent selected" data-color="transparent"></div>
+          <div class="swatch" style="background:#ffffff" data-color="#ffffff"></div>
+          <div class="swatch" style="background:#000000" data-color="#000000"></div>
+          <div class="swatch" style="background:#f8f4ec" data-color="#f8f4ec"></div>
+          <div class="swatch" style="background:#1a1a2e" data-color="#1a1a2e"></div>
+          <div class="swatch" style="background:#7c6dff" data-color="#7c6dff"></div>
+          <div class="swatch" style="background:#ff6d8b" data-color="#ff6d8b"></div>
+          <div class="swatch" style="background:#6dffda" data-color="#6dffda"></div>
+          <div class="color-input-wrap">
+            <label for="customColor">+</label>
+            <input type="color" id="customColor" value="#ff6600">
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-download" id="btnDownload">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download PNG
+        </button>
+        <button class="btn-reset" onclick="reset()">Try Another</button>
+      </div>
+
+      <div class="credits-info">
+        ℹ️ Remove.bg free plan: 50 API calls/month. Each image uses 1 credit.
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <div>
+          <div class="feature-title">Pro Quality</div>
+          <div class="feature-desc">Handles hair, fur &amp; complex edges with precision.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <div>
+          <div class="feature-title">Instant Results</div>
+          <div class="feature-desc">API response typically in 2–5 seconds per image.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎨</div>
+        <div>
+          <div class="feature-title">Custom Backgrounds</div>
+          <div class="feature-desc">Transparent PNG, solid colors, or any custom hex.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let apiKey = localStorage.getItem('rmbg_apikey') || '';
+  let resultBlob = null;
+  let selectedBg = 'transparent';
+
+  if (apiKey) {
+    document.getElementById('apiKeyInput').value = apiKey;
+    document.getElementById('apiSaved').classList.add('show');
+    enableDropZone();
+  }
+
+  function saveApiKey() {
+    const val = document.getElementById('apiKeyInput').value.trim();
+    if (!val) { showError('Please enter a valid API key.'); return; }
+    apiKey = val;
+    localStorage.setItem('rmbg_apikey', apiKey);
+    document.getElementById('apiSaved').classList.add('show');
+    showError('');
+    enableDropZone();
+  }
+
+  function enableDropZone() {
+    const dz = document.getElementById('dropZone');
+    dz.classList.remove('disabled');
+    document.getElementById('dropSub').textContent = 'or click to browse your files';
+  }
+
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    if (!dropZone.classList.contains('disabled')) dropZone.classList.add('drag-over');
+  });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('drag-over');
+    if (dropZone.classList.contains('disabled')) return;
+    const f = e.dataTransfer.files[0];
+    if (f && f.type.startsWith('image/')) handleFile(f);
+  });
+  dropZone.addEventListener('click', e => {
+    if (dropZone.classList.contains('disabled')) return;
+    if (e.target.tagName !== 'BUTTON') fileInput.click();
+  });
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+
+  async function handleFile(file) {
+    if (!apiKey) { showError('Please save your Remove.bg API key first.'); return; }
+    showError('');
+    dropZone.style.display = 'none';
+    document.getElementById('processPanel').classList.add('active');
+    document.getElementById('resultsPanel').classList.remove('active');
+
+    setProgress(10, 'Reading image…');
+    document.getElementById('originalImg').src = URL.createObjectURL(file);
+
+    setProgress(35, 'Sending to Remove.bg API…');
+
+    try {
+      const formData = new FormData();
+      formData.append('image_file', file);
+      formData.append('size', 'auto');
+
+      // Simulate progress while waiting
+      let fakeProgress = 35;
+      const ticker = setInterval(() => {
+        fakeProgress = Math.min(fakeProgress + 3, 80);
+        setProgress(fakeProgress, 'AI processing edges…');
+      }, 400);
+
+      const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+        method: 'POST',
+        headers: { 'X-Api-Key': apiKey },
+        body: formData
+      });
+
+      clearInterval(ticker);
+      setProgress(88, 'Receiving result…');
+
+      if (!response.ok) {
+        let msg = `API error ${response.status}`;
+        try {
+          const errData = await response.json();
+          msg = errData.errors?.[0]?.title || msg;
+        } catch(e) {}
+        if (response.status === 402) throw new Error('No credits left. Upgrade at remove.bg or wait for monthly reset.');
+        if (response.status === 403) throw new Error('Invalid API key. Double-check at remove.bg/profile/api.');
+        throw new Error(msg);
+      }
+
+      resultBlob = await response.blob();
+      setProgress(100, 'Done!');
+
+      document.getElementById('resultImg').src = URL.createObjectURL(resultBlob);
+
+      setTimeout(() => {
+        document.getElementById('processPanel').classList.remove('active');
+        document.getElementById('resultsPanel').classList.add('active');
+        applyBg();
+      }, 300);
+
+    } catch (err) {
+      showError('❌ ' + err.message);
+      dropZone.style.display = '';
+      document.getElementById('processPanel').classList.remove('active');
+    }
+  }
+
+  document.getElementById('swatches').addEventListener('click', e => {
+    const sw = e.target.closest('.swatch');
+    if (!sw) return;
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+    sw.classList.add('selected');
+    selectedBg = sw.dataset.color;
+    applyBg();
+  });
+
+  document.getElementById('customColor').addEventListener('input', e => {
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+    selectedBg = e.target.value;
+    applyBg();
+  });
+
+  function applyBg() {
+    const slot = document.getElementById('resultSlot');
+    if (selectedBg === 'transparent') {
+      slot.style.background = '';
+      slot.classList.add('checker-bg');
+    } else {
+      slot.classList.remove('checker-bg');
+      slot.style.background = selectedBg;
+    }
+  }
+
+  document.getElementById('btnDownload').addEventListener('click', async () => {
+    if (!resultBlob) return;
+    if (selectedBg === 'transparent') {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(resultBlob);
+      a.download = 'bg-removed.png';
+      a.click();
+    } else {
+      const img = new Image();
+      img.src = URL.createObjectURL(resultBlob);
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = selectedBg;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(blob => {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'bg-removed.png';
+          a.click();
+        }, 'image/png');
+      };
+    }
+  });
+
+  function reset() {
+    dropZone.style.display = '';
+    document.getElementById('processPanel').classList.remove('active');
+    document.getElementById('resultsPanel').classList.remove('active');
+    fileInput.value = '';
+    resultBlob = null;
+    selectedBg = 'transparent';
+    document.querySelectorAll('.swatch').forEach((s, i) => s.classList.toggle('selected', i === 0));
+    showError('');
+    applyBg();
+  }
+
+  function setProgress(pct, text) {
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+    document.getElementById('progressText').textContent = text;
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorToast');
+    el.textContent = msg;
+    el.classList.toggle('active', !!msg);
+  }
+</script>
+</body>
+</html>

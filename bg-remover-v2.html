@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Poof — Background Remover</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0d0d12;
+    --surface: #f5f3ef;
+    --card: #ffffff;
+    --accent: #6c47ff;
+    --accent2: #ff4f87;
+    --muted: #9896a4;
+    --border: #e4e2de;
+    --success: #22c55e;
+    --error: #ef4444;
+    --radius: 18px;
+    --shadow: 0 4px 32px rgba(108,71,255,.10);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── BLOBS ── */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob-1 { width: 520px; height: 520px; background: var(--accent); top: -160px; right: -120px; }
+  .blob-2 { width: 380px; height: 380px; background: var(--accent2); bottom: -100px; left: -80px; }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 40px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(245,243,239,.7);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 16px;
+  }
+  .badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    letter-spacing: .04em;
+  }
+  .header-link {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .header-link:hover { color: var(--accent); }
+
+  /* ── MAIN ── */
+  main {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 56px 20px 80px;
+    gap: 40px;
+  }
+
+  /* ── HERO ── */
+  .hero { text-align: center; max-width: 600px; }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent) 30%, var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── API KEY BAR ── */
+  .api-bar {
+    width: 100%;
+    max-width: 620px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: var(--shadow);
+  }
+  .api-bar label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .api-bar .input-row {
+    display: flex; gap: 10px;
+  }
+  .api-bar input {
+    flex: 1;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: 'DM Mono', 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--surface);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .api-bar input:focus { border-color: var(--accent); }
+  .api-bar input::placeholder { color: var(--muted); }
+
+  /* ── UPLOAD CARD ── */
+  .upload-card {
+    width: 100%;
+    max-width: 620px;
+    background: var(--card);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 48px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: border-color .25s, transform .2s, box-shadow .2s;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .upload-card:hover, .upload-card.drag-over {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 40px rgba(108,71,255,.16);
+  }
+  .upload-icon {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, rgba(108,71,255,.12), rgba(255,79,135,.12));
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+  .upload-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+  .upload-card p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .upload-card .formats {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  }
+  .format-chip {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--surface);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  #file-input { display: none; }
+
+  /* ── PROCESS BUTTON ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 13px 28px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: opacity .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 18px rgba(108,71,255,.35);
+    letter-spacing: .02em;
+  }
+  .btn-primary:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(108,71,255,.45);
+  }
+  .btn-primary:disabled {
+    opacity: 0.55; cursor: not-allowed; transform: none;
+  }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 11px 22px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    text-decoration: none;
+  }
+  .btn-secondary:hover { border-color: var(--accent); background: white; }
+
+  /* ── PREVIEW GRID ── */
+  .preview-section {
+    width: 100%;
+    max-width: 860px;
+    display: none;
+    flex-direction: column;
+    gap: 24px;
+    animation: fadeUp .4s ease forwards;
+  }
+  .preview-section.visible { display: flex; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .preview-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-align: center;
+  }
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 580px) { .preview-grid { grid-template-columns: 1fr; } }
+
+  .preview-pane {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .preview-pane .pane-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+  .dot.green { background: var(--success); }
+  .preview-img-wrap {
+    width: 100%;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: repeating-conic-gradient(#e8e8e8 0% 25%, #f5f5f5 0% 50%) 0 0 / 16px 16px;
+  }
+  .preview-img-wrap.solid { background: var(--surface); }
+  .preview-img-wrap img {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* ── STATUS ── */
+  .status-bar {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    max-width: 620px;
+    width: 100%;
+    animation: fadeUp .3s ease;
+  }
+  .status-bar.info    { background: rgba(108,71,255,.09); color: var(--accent); border: 1px solid rgba(108,71,255,.2); }
+  .status-bar.success { background: rgba(34,197,94,.09); color: #16a34a; border: 1px solid rgba(34,197,94,.2); }
+  .status-bar.error   { background: rgba(239,68,68,.09); color: var(--error); border: 1px solid rgba(239,68,68,.2); }
+  .status-bar.show    { display: flex; }
+
+  /* ── SPINNER ── */
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2.5px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin .75s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── ACTIONS ── */
+  .result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 24px 20px;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<header>
+  <a class="logo" href="#">
+    <div class="logo-icon">✨</div>
+    Poof Eraser
+  </a>
+  <div style="display:flex;align-items:center;gap:14px">
+    <span class="badge">poof.bg API</span>
+    <a class="header-link" href="https://docs.poof.bg" target="_blank">Docs ↗</a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Remove Backgrounds<br><span>Instantly.</span></h1>
+    <p>Powered by <strong>poof.bg</strong> — GPU-accelerated AI that handles hair,<br>fur, and complex edges with pixel-perfect precision.</p>
+  </div>
+
+  <!-- API KEY -->
+  <div class="api-bar">
+    <label>🔑 &nbsp;Your poof.bg API Key</label>
+    <div class="input-row">
+      <input type="password" id="api-key" placeholder="pk_live_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
+    </div>
+    <p style="font-size:.78rem;color:var(--muted)">Get a free key (100 credits) at <a href="https://dash.poof.bg/auth/sign-up" target="_blank" style="color:var(--accent)">dash.poof.bg</a> — no credit card required.</p>
+  </div>
+
+  <!-- UPLOAD -->
+  <div class="upload-card" id="drop-zone">
+    <div class="upload-icon">🖼️</div>
+    <h3>Drop your image here</h3>
+    <p>or click to browse files from your computer</p>
+    <div class="formats">
+      <span class="format-chip">JPG</span>
+      <span class="format-chip">PNG</span>
+      <span class="format-chip">WebP</span>
+      <span class="format-chip">max 20 MB</span>
+    </div>
+    <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" />
+  </div>
+
+  <!-- STATUS -->
+  <div class="status-bar" id="status-bar">
+    <div class="spinner" id="status-spinner" style="display:none"></div>
+    <span id="status-text"></span>
+  </div>
+
+  <!-- REMOVE BUTTON -->
+  <button class="btn-primary" id="remove-btn" disabled>
+    ✨ Remove Background
+  </button>
+
+  <!-- PREVIEW SECTION -->
+  <div class="preview-section" id="preview-section">
+    <h2>Before &amp; After</h2>
+    <div class="preview-grid">
+      <div class="preview-pane">
+        <div class="pane-header">
+          <span>Original</span>
+          <div class="dot green"></div>
+        </div>
+        <div class="preview-img-wrap solid">
+          <img id="original-img" src="" alt="Original" />
+        </div>
+      </div>
+      <div class="preview-pane">
+        <div class="pane-header">
+          <span>Background Removed</span>
+          <div class="dot" id="result-dot"></div>
+        </div>
+        <div class="preview-img-wrap" id="result-wrap">
+          <img id="result-img" src="" alt="Result" style="display:none" />
+          <span id="result-placeholder" style="color:var(--muted);font-size:.88rem">Result will appear here</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-actions" id="result-actions" style="display:none">
+      <a id="download-btn" class="btn-primary" download="background-removed.png">
+        ⬇️ Download PNG
+      </a>
+      <button class="btn-secondary" id="reset-btn">↩ Try Another Image</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Built with <a href="https://poof.bg" target="_blank">poof.bg API</a> &nbsp;·&nbsp;
+  Images processed in-memory &amp; deleted immediately &nbsp;·&nbsp;
+  GDPR compliant
+</footer>
+
+<script>
+  const dropZone   = document.getElementById('drop-zone');
+  const fileInput  = document.getElementById('file-input');
+  const removeBtn  = document.getElementById('remove-btn');
+  const statusBar  = document.getElementById('status-bar');
+  const statusText = document.getElementById('status-text');
+  const spinner    = document.getElementById('status-spinner');
+  const previewSec = document.getElementById('preview-section');
+  const origImg    = document.getElementById('original-img');
+  const resultImg  = document.getElementById('result-img');
+  const resultDot  = document.getElementById('result-dot');
+  const resultWrap = document.getElementById('result-wrap');
+  const placeholder= document.getElementById('result-placeholder');
+  const resultActs = document.getElementById('result-actions');
+  const downloadBtn= document.getElementById('download-btn');
+  const resetBtn   = document.getElementById('reset-btn');
+  const apiKeyInp  = document.getElementById('api-key');
+
+  let selectedFile = null;
+
+  /* ── drop zone ── */
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) handleFile(file);
+  });
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) handleFile(fileInput.files[0]);
+  });
+
+  function handleFile(file) {
+    if (!file.type.startsWith('image/')) return showStatus('Please select a JPG, PNG, or WebP image.', 'error');
+    if (file.size > 20 * 1024 * 1024) return showStatus('File size exceeds 20 MB limit.', 'error');
+    selectedFile = file;
+    const url = URL.createObjectURL(file);
+    origImg.src = url;
+    previewSec.classList.add('visible');
+    resultImg.style.display = 'none';
+    placeholder.style.display = '';
+    resultDot.classList.remove('green');
+    resultActs.style.display = 'none';
+    removeBtn.disabled = false;
+    showStatus(`"${file.name}" loaded — click Remove Background to process.`, 'info');
+  }
+
+  /* ── remove ── */
+  removeBtn.addEventListener('click', async () => {
+    const apiKey = apiKeyInp.value.trim();
+    if (!apiKey) return showStatus('Please enter your poof.bg API key first.', 'error');
+    if (!selectedFile) return showStatus('Please select an image first.', 'error');
+
+    removeBtn.disabled = true;
+    showStatus('Processing your image…', 'info', true);
+
+    try {
+      const formData = new FormData();
+      formData.append('image_file', selectedFile);
+      formData.append('format', 'png');
+      formData.append('size', 'full');
+      formData.append('channels', 'rgba');
+
+      let response;
+      try {
+        response = await fetch('https://api.poof.bg/v1/remove', {
+          method: 'POST',
+          headers: { 'x-api-key': apiKey },
+          body: formData
+        });
+      } catch (networkErr) {
+        // Likely a CORS or network failure
+        throw new Error('Network error: Could not reach api.poof.bg. This may be a CORS restriction — try running the app from a local server or backend proxy. Details: ' + networkErr.message);
+      }
+
+      if (!response.ok) {
+        let errMsg = `API error ${response.status}`;
+        try {
+          const rawText = await response.text();
+          try {
+            const errData = JSON.parse(rawText);
+            // Handle nested: { error: { message } } or flat: { message } or { error }
+            if (errData.error && typeof errData.error === 'object') {
+              errMsg = errData.error.message || errData.error.code || JSON.stringify(errData.error);
+            } else if (typeof errData.error === 'string') {
+              errMsg = errData.error;
+            } else if (errData.message) {
+              errMsg = errData.message;
+            } else {
+              errMsg = rawText.slice(0, 200);
+            }
+          } catch (_) {
+            errMsg = rawText.slice(0, 200) || errMsg;
+          }
+        } catch (_) {}
+        // Map common HTTP codes to helpful messages
+        if (response.status === 401 || response.status === 403) errMsg = 'Invalid or unauthorized API key. Check your key at dash.poof.bg.';
+        if (response.status === 402) errMsg = 'No credits remaining. Top up at dash.poof.bg.';
+        if (response.status === 429) errMsg = 'Rate limit reached. Please wait a moment and try again.';
+        throw new Error(errMsg);
+      }
+
+      const contentType = response.headers.get('content-type') || '';
+      // If the API returned JSON instead of an image, something went wrong
+      if (contentType.includes('application/json')) {
+        const errData = await response.json();
+        const msg = errData.message || errData.error || 'Unexpected JSON response from API.';
+        throw new Error(typeof msg === 'object' ? JSON.stringify(msg) : msg);
+      }
+
+      const blob = await response.blob();
+      const resultUrl = URL.createObjectURL(blob);
+      resultImg.src = resultUrl;
+      resultImg.style.display = '';
+      placeholder.style.display = 'none';
+      resultDot.classList.add('green');
+      downloadBtn.href = resultUrl;
+      resultActs.style.display = 'flex';
+      showStatus('Background removed successfully! Download your image below.', 'success');
+    } catch (err) {
+      showStatus(err.message, 'error');
+    } finally {
+      removeBtn.disabled = false;
+    }
+  });
+
+  /* ── reset ── */
+  resetBtn.addEventListener('click', () => {
+    selectedFile = null;
+    fileInput.value = '';
+    origImg.src = '';
+    resultImg.src = '';
+    resultImg.style.display = 'none';
+    placeholder.style.display = '';
+    resultDot.classList.remove('green');
+    resultActs.style.display = 'none';
+    previewSec.classList.remove('visible');
+    removeBtn.disabled = true;
+    statusBar.className = 'status-bar';
+  });
+
+  /* ── status ── */
+  function showStatus(msg, type = 'info', loading = false) {
+    statusText.textContent = msg;
+    spinner.style.display = loading ? '' : 'none';
+    statusBar.className = `status-bar show ${type}`;
+  }
+</script>
+</body>
+</html>
