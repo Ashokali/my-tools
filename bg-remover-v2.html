@@ -32,7 +32,6 @@
     overflow-x: hidden;
   }
 
-  /* ── NOISE OVERLAY ── */
   body::before {
     content: '';
     position: fixed;
@@ -43,19 +42,10 @@
     z-index: 0;
   }
 
-  /* ── BLOBS ── */
-  .blob {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.18;
-    pointer-events: none;
-    z-index: 0;
-  }
+  .blob { position: fixed; border-radius: 50%; filter: blur(90px); opacity: 0.18; pointer-events: none; z-index: 0; }
   .blob-1 { width: 520px; height: 520px; background: var(--accent); top: -160px; right: -120px; }
   .blob-2 { width: 380px; height: 380px; background: var(--accent2); bottom: -100px; left: -80px; }
 
-  /* ── HEADER ── */
   header {
     position: relative;
     z-index: 10;
@@ -68,343 +58,435 @@
     backdrop-filter: blur(12px);
   }
   .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.3rem;
-    color: var(--ink);
-    text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem;
+    color: var(--ink); text-decoration: none;
   }
   .logo-icon {
     width: 32px; height: 32px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    color: white;
-    font-size: 16px;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 16px;
   }
   .badge {
-    font-size: 0.68rem;
-    font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 20px;
+    font-size: 0.68rem; font-weight: 600; padding: 3px 9px; border-radius: 20px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: white;
-    letter-spacing: .04em;
+    color: white; letter-spacing: .04em;
   }
-  .header-link {
-    font-size: 0.85rem;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color .2s;
-  }
+  .header-link { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color .2s; }
   .header-link:hover { color: var(--accent); }
 
-  /* ── MAIN ── */
   main {
-    position: relative;
-    z-index: 1;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 56px 20px 80px;
-    gap: 40px;
+    position: relative; z-index: 1; flex: 1;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 48px 20px 80px; gap: 32px;
   }
 
-  /* ── HERO ── */
   .hero { text-align: center; max-width: 600px; }
   .hero h1 {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
-    font-weight: 800;
-    line-height: 1.1;
-    color: var(--ink);
-    margin-bottom: 16px;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800; line-height: 1.1; color: var(--ink); margin-bottom: 14px;
   }
   .hero h1 span {
     background: linear-gradient(135deg, var(--accent) 30%, var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .hero p {
-    font-size: 1.05rem;
-    color: var(--muted);
-    line-height: 1.65;
-  }
+  .hero p { font-size: 1rem; color: var(--muted); line-height: 1.65; }
 
-  /* ── API KEY BAR ── */
+  /* ── API KEY ── */
   .api-bar {
-    width: 100%;
-    max-width: 620px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: var(--shadow);
+    width: 100%; max-width: 680px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 24px;
+    display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow);
   }
   .api-bar label {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.82rem;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--muted);
+    font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.82rem;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
   }
-  .api-bar .input-row {
-    display: flex; gap: 10px;
-  }
+  .api-bar .input-row { display: flex; gap: 10px; }
   .api-bar input {
-    flex: 1;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-family: 'DM Mono', 'Courier New', monospace;
-    font-size: 0.9rem;
-    color: var(--ink);
-    background: var(--surface);
-    outline: none;
-    transition: border-color .2s;
+    flex: 1; border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 10px 14px; font-family: 'DM Mono','Courier New',monospace;
+    font-size: 0.9rem; color: var(--ink); background: var(--surface);
+    outline: none; transition: border-color .2s;
   }
   .api-bar input:focus { border-color: var(--accent); }
   .api-bar input::placeholder { color: var(--muted); }
   .btn-save-key {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--surface);
-    color: var(--ink);
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.85rem;
-    padding: 10px 16px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: border-color .2s, background .2s, color .2s;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--surface); color: var(--ink); font-family: 'Syne', sans-serif;
+    font-weight: 600; font-size: 0.85rem; padding: 10px 16px;
+    border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer;
+    white-space: nowrap; transition: border-color .2s, background .2s, color .2s;
   }
   .btn-save-key:hover { border-color: var(--accent); color: var(--accent); background: rgba(108,71,255,.06); }
   .btn-save-key.saved { border-color: var(--success); color: var(--success); background: rgba(34,197,94,.06); }
 
-  /* ── UPLOAD CARD ── */
+  /* ── OPTIONS PANEL ── */
+  .options-panel {
+    width: 100%; max-width: 680px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 24px;
+    display: flex; flex-direction: column; gap: 18px; box-shadow: var(--shadow);
+  }
+  .options-panel h3 {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+    color: var(--ink); letter-spacing: .02em;
+  }
+  .options-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  @media (max-width: 520px) { .options-grid { grid-template-columns: 1fr; } }
+
+  .option-group { display: flex; flex-direction: column; gap: 8px; }
+  .option-group label {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* BG Type Chips */
+  .bg-type-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .bg-chip {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 10px; border: 1.5px solid var(--border);
+    background: var(--surface); font-size: 0.82rem; font-weight: 600;
+    cursor: pointer; transition: all .2s; color: var(--ink); user-select: none;
+  }
+  .bg-chip:hover { border-color: var(--accent); background: rgba(108,71,255,.05); }
+  .bg-chip.active {
+    border-color: var(--accent); background: rgba(108,71,255,.1); color: var(--accent);
+  }
+  .chip-icon { font-size: 14px; }
+
+  /* Color picker row */
+  .color-row {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .color-swatch {
+    width: 28px; height: 28px; border-radius: 8px; cursor: pointer;
+    border: 2px solid transparent; transition: transform .15s, border-color .15s;
+    flex-shrink: 0;
+  }
+  .color-swatch:hover { transform: scale(1.15); }
+  .color-swatch.active { border-color: var(--accent); transform: scale(1.15); }
+  .color-swatch.custom {
+    background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);
+    position: relative;
+  }
+  input[type="color"]#custom-color {
+    position: absolute; opacity: 0; width: 28px; height: 28px;
+    border: none; padding: 0; cursor: pointer;
+  }
+  .custom-color-wrap { position: relative; width: 28px; height: 28px; }
+
+  /* Quality / Format row */
+  .select-styled {
+    border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 8px 12px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; color: var(--ink); background: var(--surface);
+    outline: none; cursor: pointer; transition: border-color .2s; width: 100%;
+  }
+  .select-styled:focus { border-color: var(--accent); }
+
+  /* Blur slider */
+  .slider-wrap { display: flex; align-items: center; gap: 10px; }
+  input[type="range"] {
+    flex: 1; accent-color: var(--accent); cursor: pointer;
+  }
+  .slider-val {
+    font-size: 0.82rem; font-weight: 600; color: var(--accent);
+    min-width: 32px; text-align: right;
+  }
+
+  /* ── UPLOAD ZONE ── */
   .upload-card {
-    width: 100%;
-    max-width: 620px;
-    background: var(--card);
-    border: 2px dashed var(--border);
-    border-radius: var(--radius);
-    padding: 48px 32px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    cursor: pointer;
+    width: 100%; max-width: 680px;
+    background: var(--card); border: 2px dashed var(--border);
+    border-radius: var(--radius); padding: 42px 32px;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 14px; cursor: pointer;
     transition: border-color .25s, transform .2s, box-shadow .2s;
-    box-shadow: var(--shadow);
-    text-align: center;
+    box-shadow: var(--shadow); text-align: center;
   }
   .upload-card:hover, .upload-card.drag-over {
-    border-color: var(--accent);
-    transform: translateY(-3px);
+    border-color: var(--accent); transform: translateY(-3px);
     box-shadow: 0 8px 40px rgba(108,71,255,.16);
   }
   .upload-icon {
     width: 64px; height: 64px;
     background: linear-gradient(135deg, rgba(108,71,255,.12), rgba(255,79,135,.12));
-    border-radius: 20px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
+    border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 28px;
   }
-  .upload-card h3 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--ink);
-  }
-  .upload-card p {
-    font-size: 0.88rem;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-  .upload-card .formats {
-    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
-  }
+  .upload-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--ink); }
+  .upload-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+  .formats { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
   .format-chip {
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: var(--surface);
-    color: var(--muted);
-    border: 1px solid var(--border);
+    font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 20px;
+    background: var(--surface); color: var(--muted); border: 1px solid var(--border);
   }
   #file-input { display: none; }
 
+  /* ── IMAGE QUEUE ── */
+  .queue-section {
+    width: 100%; max-width: 860px;
+    display: none; flex-direction: column; gap: 16px;
+    animation: fadeUp .4s ease forwards;
+  }
+  .queue-section.visible { display: flex; }
+  .queue-header {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .queue-header h2 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--ink); }
+  .queue-stats { font-size: 0.82rem; color: var(--muted); }
+
+  .image-queue {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+  }
+
+  .queue-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    overflow: hidden; box-shadow: var(--shadow); transition: box-shadow .2s;
+    position: relative;
+  }
+  .queue-item:hover { box-shadow: 0 8px 32px rgba(108,71,255,.15); }
+  .queue-item .thumb-wrap {
+    width: 100%; height: 220px; overflow: hidden;
+    background: var(--surface); position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .queue-item .thumb-wrap img {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+  }
+  .queue-item .item-info {
+    padding: 10px 12px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .item-name {
+    font-size: 0.8rem; font-weight: 600; color: var(--ink);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .item-size { font-size: 0.72rem; color: var(--muted); }
+
+  /* Status badge */
+  .item-badge {
+    position: absolute; top: 8px; left: 8px;
+    font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 20px;
+    backdrop-filter: blur(6px); letter-spacing: .03em;
+  }
+  .item-badge.pending { background: rgba(152,150,164,.9); color: white; }
+  .item-badge.processing { background: rgba(108,71,255,.9); color: white; }
+  .item-badge.done { background: rgba(34,197,94,.9); color: white; }
+  .item-badge.error { background: rgba(239,68,68,.9); color: white; }
+
+  /* Remove from queue */
+  .item-remove {
+    position: absolute; top: 8px; right: 8px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(0,0,0,.45); color: white; border: none;
+    font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .2s;
+  }
+  .queue-item:hover .item-remove { opacity: 1; }
+
+  /* Result overlay */
+  .item-result-overlay {
+    position: absolute; inset: 0; display: none;
+    align-items: center; justify-content: center;
+    background: repeating-conic-gradient(#e8e8e8 0% 25%, #f5f5f5 0% 50%) 0 0 / 14px 14px;
+  }
+  .item-result-overlay.visible { display: flex; }
+  .item-result-overlay img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .result-toggle {
+    position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+    font-size: 0.68rem; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+    background: rgba(0,0,0,.55); color: white; border: none; cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* Queue download bar */
+  .item-actions {
+    display: flex; gap: 6px; padding: 0 12px 12px;
+  }
+  .item-dl {
+    flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white; font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.75rem; padding: 7px 10px; border-radius: 8px;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity .2s; display: none;
+  }
+  .item-dl.visible { display: inline-flex; }
+
   /* ── PROCESS BUTTON ── */
   .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-flex; align-items: center; gap: 8px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: white;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 13px 28px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
+    color: white; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+    padding: 13px 28px; border: none; border-radius: 12px; cursor: pointer;
     transition: opacity .2s, transform .15s, box-shadow .2s;
-    box-shadow: 0 4px 18px rgba(108,71,255,.35);
-    letter-spacing: .02em;
+    box-shadow: 0 4px 18px rgba(108,71,255,.35); letter-spacing: .02em;
   }
-  .btn-primary:hover:not(:disabled) {
-    opacity: 0.92;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(108,71,255,.45);
-  }
-  .btn-primary:disabled {
-    opacity: 0.55; cursor: not-allowed; transform: none;
-  }
+  .btn-primary:hover:not(:disabled) { opacity: 0.92; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(108,71,255,.45); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
   .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface);
-    color: var(--ink);
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.88rem;
-    padding: 11px 22px;
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: border-color .2s, background .2s;
-    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface); color: var(--ink); font-family: 'Syne', sans-serif;
+    font-weight: 600; font-size: 0.88rem; padding: 11px 22px;
+    border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer;
+    transition: border-color .2s, background .2s; text-decoration: none;
   }
   .btn-secondary:hover { border-color: var(--accent); background: white; }
 
-  /* ── PREVIEW GRID ── */
-  .preview-section {
-    width: 100%;
-    max-width: 860px;
-    display: none;
-    flex-direction: column;
-    gap: 24px;
-    animation: fadeUp .4s ease forwards;
-  }
-  .preview-section.visible { display: flex; }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .preview-section h2 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.15rem;
-    color: var(--ink);
-    text-align: center;
-  }
-  .preview-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
-  @media (max-width: 580px) { .preview-grid { grid-template-columns: 1fr; } }
-
-  .preview-pane {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-  }
-  .preview-pane .pane-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 18px;
-    border-bottom: 1px solid var(--border);
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.82rem;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
-  .dot.green { background: var(--success); }
-  .preview-img-wrap {
-    width: 100%;
-    aspect-ratio: 4/3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background: repeating-conic-gradient(#e8e8e8 0% 25%, #f5f5f5 0% 50%) 0 0 / 16px 16px;
-  }
-  .preview-img-wrap.solid { background: var(--surface); }
-  .preview-img-wrap img {
-    max-width: 100%; max-height: 100%;
-    object-fit: contain;
-    display: block;
+  /* ── ACTION ROW ── */
+  .action-row {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; align-items: center;
   }
 
   /* ── STATUS ── */
   .status-bar {
-    display: none;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 20px;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    max-width: 620px;
-    width: 100%;
-    animation: fadeUp .3s ease;
+    display: none; align-items: center; gap: 12px; padding: 14px 20px;
+    border-radius: 12px; font-size: 0.9rem; font-weight: 500;
+    max-width: 680px; width: 100%; animation: fadeUp .3s ease;
   }
   .status-bar.info    { background: rgba(108,71,255,.09); color: var(--accent); border: 1px solid rgba(108,71,255,.2); }
   .status-bar.success { background: rgba(34,197,94,.09); color: #16a34a; border: 1px solid rgba(34,197,94,.2); }
   .status-bar.error   { background: rgba(239,68,68,.09); color: var(--error); border: 1px solid rgba(239,68,68,.2); }
   .status-bar.show    { display: flex; }
 
-  /* ── SPINNER ── */
   .spinner {
-    width: 18px; height: 18px;
-    border: 2.5px solid currentColor;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin .75s linear infinite;
-    flex-shrink: 0;
+    width: 18px; height: 18px; border: 2.5px solid currentColor; border-top-color: transparent;
+    border-radius: 50%; animation: spin .75s linear infinite; flex-shrink: 0;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ── ACTIONS ── */
-  .result-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── FOOTER ── */
+  /* Progress bar */
+  .progress-wrap {
+    width: 100%; max-width: 680px; display: none;
+    flex-direction: column; gap: 6px;
+  }
+  .progress-wrap.visible { display: flex; }
+  .progress-bar-bg {
+    height: 6px; background: var(--border); border-radius: 20px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 20px; transition: width .3s ease;
+  }
+  .progress-label { font-size: 0.78rem; color: var(--muted); text-align: right; }
+
+  /* Download all */
+  .download-all-wrap {
+    display: none; justify-content: center; gap: 12px; flex-wrap: wrap;
+  }
+  .download-all-wrap.visible { display: flex; }
+
   footer {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 24px 20px;
-    border-top: 1px solid var(--border);
-    font-size: 0.8rem;
-    color: var(--muted);
+    position: relative; z-index: 1; text-align: center;
+    padding: 24px 20px; border-top: 1px solid var(--border);
+    font-size: 0.8rem; color: var(--muted);
   }
   footer a { color: var(--accent); text-decoration: none; }
+
+  /* concurrency toggle */
+  .concurrency-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .concurrency-row label { font-size: 0.82rem; color: var(--muted); }
+  .pill-toggle {
+    display: flex; background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+  }
+  .pill-toggle button {
+    padding: 5px 12px; font-size: 0.78rem; font-weight: 600;
+    border: none; background: transparent; cursor: pointer; color: var(--muted);
+    transition: background .15s, color .15s;
+  }
+  .pill-toggle button.active { background: var(--accent); color: white; }
+
+  /* ── FULLSCREEN LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(10, 10, 16, 0.92);
+    backdrop-filter: blur(16px);
+    align-items: center; justify-content: center;
+    animation: lbFadeIn .2s ease;
+  }
+  .lightbox.open { display: flex; }
+  @keyframes lbFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .lightbox-inner {
+    position: relative;
+    max-width: 92vw; max-height: 90vh;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+  }
+  .lightbox-checker {
+    background:
+      repeating-conic-gradient(#444 0% 25%, #2a2a2a 0% 50%)
+      0 0 / 20px 20px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,.7);
+    display: flex; align-items: center; justify-content: center;
+    max-width: 90vw; max-height: 80vh;
+  }
+  .lightbox-checker img {
+    max-width: 88vw; max-height: 78vh;
+    object-fit: contain; display: block;
+  }
+  .lightbox-close {
+    position: fixed; top: 20px; right: 24px;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.2);
+    color: white; font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, transform .15s;
+    z-index: 1001;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,.22); transform: scale(1.1); }
+  .lightbox-actions {
+    display: flex; gap: 10px;
+  }
+  .lightbox-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px; border-radius: 10px; border: none; cursor: pointer;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.82rem;
+    transition: opacity .2s, transform .15s;
+  }
+  .lightbox-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .lightbox-btn.primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white;
+  }
+  .lightbox-btn.secondary {
+    background: rgba(255,255,255,.12); color: white;
+    border: 1.5px solid rgba(255,255,255,.2);
+  }
+  .lightbox-filename {
+    font-size: 0.78rem; color: rgba(255,255,255,.45); text-align: center;
+  }
+
+  /* Fullscreen button on each card */
+  .item-fullscreen {
+    position: absolute; bottom: 8px; right: 8px;
+    width: 28px; height: 28px; border-radius: 7px;
+    background: rgba(0,0,0,.5); color: white; border: none;
+    font-size: 13px; cursor: pointer; display: none;
+    align-items: center; justify-content: center;
+    transition: background .2s, opacity .2s;
+    opacity: 0;
+  }
+  .queue-item:hover .item-fullscreen { opacity: 1; }
+  .item-fullscreen.visible { display: flex; }
 </style>
 </head>
 <body>
@@ -427,7 +509,7 @@
   <!-- HERO -->
   <div class="hero">
     <h1>Remove Backgrounds<br><span>Instantly.</span></h1>
-    <p>Powered by <strong>poof.bg</strong> — GPU-accelerated AI that handles hair,<br>fur, and complex edges with pixel-perfect precision.</p>
+    <p>Batch-process multiple images with AI — transparent, color fill, or blur backgrounds.</p>
   </div>
 
   <!-- API KEY -->
@@ -435,24 +517,115 @@
     <label>🔑 &nbsp;Your poof.bg API Key</label>
     <div class="input-row">
       <input type="password" id="api-key" placeholder="pk_live_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
-      <button class="btn-save-key" id="save-key-btn" title="Save key to browser storage">💾 Save</button>
+      <button class="btn-save-key" id="save-key-btn">💾 Save</button>
     </div>
     <p id="key-save-msg" style="font-size:.78rem;display:none"></p>
     <p style="font-size:.78rem;color:var(--muted)">Get a free key (100 credits) at <a href="https://dash.poof.bg/auth/sign-up" target="_blank" style="color:var(--accent)">dash.poof.bg</a> — no credit card required.</p>
   </div>
 
+  <!-- OPTIONS PANEL -->
+  <div class="options-panel">
+    <h3>⚙️ Removal Options</h3>
+    <div class="options-grid">
+
+      <!-- Background Type -->
+      <div class="option-group" style="grid-column: 1/-1;">
+        <label>Background Type</label>
+        <div class="bg-type-row">
+          <div class="bg-chip active" data-bg="transparent">
+            <span class="chip-icon">🔲</span> Transparent
+          </div>
+          <div class="bg-chip" data-bg="color">
+            <span class="chip-icon">🎨</span> Solid Color
+          </div>
+          <div class="bg-chip" data-bg="blur">
+            <span class="chip-icon">💨</span> Blur BG
+          </div>
+          <div class="bg-chip" data-bg="white">
+            <span class="chip-icon">⬜</span> White
+          </div>
+          <div class="bg-chip" data-bg="black">
+            <span class="chip-icon">⬛</span> Black
+          </div>
+        </div>
+      </div>
+
+      <!-- Color Swatches (shown only when color mode) -->
+      <div class="option-group" id="color-group" style="grid-column: 1/-1; display:none;">
+        <label>Fill Color</label>
+        <div class="color-row" id="color-swatches">
+          <div class="color-swatch active" data-color="#ffffff" style="background:#ffffff;border:1.5px solid #ddd;" title="White"></div>
+          <div class="color-swatch" data-color="#000000" style="background:#000000;" title="Black"></div>
+          <div class="color-swatch" data-color="#ef4444" style="background:#ef4444;" title="Red"></div>
+          <div class="color-swatch" data-color="#f97316" style="background:#f97316;" title="Orange"></div>
+          <div class="color-swatch" data-color="#eab308" style="background:#eab308;" title="Yellow"></div>
+          <div class="color-swatch" data-color="#22c55e" style="background:#22c55e;" title="Green"></div>
+          <div class="color-swatch" data-color="#3b82f6" style="background:#3b82f6;" title="Blue"></div>
+          <div class="color-swatch" data-color="#a855f7" style="background:#a855f7;" title="Purple"></div>
+          <div class="color-swatch" data-color="#ec4899" style="background:#ec4899;" title="Pink"></div>
+          <div class="custom-color-wrap" title="Custom color">
+            <div class="color-swatch custom" id="custom-swatch"></div>
+            <input type="color" id="custom-color" value="#6c47ff" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Blur intensity (shown only when blur mode) -->
+      <div class="option-group" id="blur-group" style="grid-column: 1/-1; display:none;">
+        <label>Blur Intensity</label>
+        <div class="slider-wrap">
+          <input type="range" id="blur-amount" min="2" max="40" value="12" />
+          <span class="slider-val" id="blur-val">12px</span>
+        </div>
+      </div>
+
+      <!-- Output Format -->
+      <div class="option-group">
+        <label>Output Format</label>
+        <select class="select-styled" id="output-format">
+          <option value="png">PNG (lossless)</option>
+          <option value="webp">WebP (smaller file)</option>
+        </select>
+      </div>
+
+      <!-- Output Size -->
+      <div class="option-group">
+        <label>Output Size</label>
+        <select class="select-styled" id="output-size">
+          <option value="full">Full resolution</option>
+          <option value="4k">4K max</option>
+          <option value="hd">HD (1920px)</option>
+          <option value="preview">Preview (600px)</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Concurrency -->
+    <div class="concurrency-row">
+      <label>Process images simultaneously:</label>
+      <div class="pill-toggle" id="concurrency-toggle">
+        <button data-val="1" class="active">1</button>
+        <button data-val="2">2</button>
+        <button data-val="3">3</button>
+        <button data-val="5">5</button>
+      </div>
+    </div>
+  </div>
+
   <!-- UPLOAD -->
   <div class="upload-card" id="drop-zone">
     <div class="upload-icon">🖼️</div>
-    <h3>Drop your image here</h3>
-    <p>or click to browse files from your computer</p>
+    <h3>Drop images here</h3>
+    <p>or click to browse — select multiple images at once</p>
     <div class="formats">
       <span class="format-chip">JPG</span>
       <span class="format-chip">PNG</span>
       <span class="format-chip">WebP</span>
-      <span class="format-chip">max 20 MB</span>
+      <span class="format-chip">max 20 MB each</span>
+      <span class="format-chip">up to 50 images</span>
     </div>
-    <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" />
+    <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" multiple />
   </div>
 
   <!-- STATUS -->
@@ -461,42 +634,31 @@
     <span id="status-text"></span>
   </div>
 
-  <!-- REMOVE BUTTON -->
-  <button class="btn-primary" id="remove-btn" disabled>
-    ✨ Remove Background
-  </button>
+  <!-- PROGRESS -->
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-label" id="progress-label">0 / 0</div>
+  </div>
 
-  <!-- PREVIEW SECTION -->
-  <div class="preview-section" id="preview-section">
-    <h2>Before &amp; After</h2>
-    <div class="preview-grid">
-      <div class="preview-pane">
-        <div class="pane-header">
-          <span>Original</span>
-          <div class="dot green"></div>
-        </div>
-        <div class="preview-img-wrap solid">
-          <img id="original-img" src="" alt="Original" />
-        </div>
-      </div>
-      <div class="preview-pane">
-        <div class="pane-header">
-          <span>Background Removed</span>
-          <div class="dot" id="result-dot"></div>
-        </div>
-        <div class="preview-img-wrap" id="result-wrap">
-          <img id="result-img" src="" alt="Result" style="display:none" />
-          <span id="result-placeholder" style="color:var(--muted);font-size:.88rem">Result will appear here</span>
-        </div>
-      </div>
-    </div>
+  <!-- ACTION BUTTONS -->
+  <div class="action-row">
+    <button class="btn-primary" id="remove-btn" disabled>✨ Remove Backgrounds</button>
+    <button class="btn-secondary" id="reset-btn" style="display:none">↩ Clear All</button>
+  </div>
 
-    <div class="result-actions" id="result-actions" style="display:none">
-      <a id="download-btn" class="btn-primary" download="background-removed.png">
-        ⬇️ Download PNG
-      </a>
-      <button class="btn-secondary" id="reset-btn">↩ Try Another Image</button>
+  <!-- IMAGE QUEUE -->
+  <div class="queue-section" id="queue-section">
+    <div class="queue-header">
+      <h2>Images</h2>
+      <span class="queue-stats" id="queue-stats"></span>
     </div>
+    <div class="image-queue" id="image-queue"></div>
+  </div>
+
+  <!-- DOWNLOAD ALL -->
+  <div class="download-all-wrap" id="download-all-wrap">
+    <button class="btn-primary" id="download-all-btn">⬇️ Download All as ZIP</button>
+    <button class="btn-secondary" id="add-more-btn">➕ Add More Images</button>
   </div>
 </main>
 
@@ -506,188 +668,506 @@
   GDPR compliant
 </footer>
 
+<!-- FULLSCREEN LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lightbox-close" id="lightbox-close" title="Close (Esc)">✕</button>
+  <div class="lightbox-inner">
+    <div class="lightbox-checker">
+      <img src="" alt="Full preview" id="lightbox-img" />
+    </div>
+    <div class="lightbox-actions">
+      <a class="lightbox-btn primary" id="lightbox-dl" download="">⬇ Download</a>
+      <button class="lightbox-btn secondary" id="lightbox-close2">✕ Close</button>
+    </div>
+    <div class="lightbox-filename" id="lightbox-filename"></div>
+  </div>
+</div>
+
+<!-- JSZip for batch download -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
-  const dropZone   = document.getElementById('drop-zone');
-  const fileInput  = document.getElementById('file-input');
-  const removeBtn  = document.getElementById('remove-btn');
-  const statusBar  = document.getElementById('status-bar');
-  const statusText = document.getElementById('status-text');
-  const spinner    = document.getElementById('status-spinner');
-  const previewSec = document.getElementById('preview-section');
-  const origImg    = document.getElementById('original-img');
-  const resultImg  = document.getElementById('result-img');
-  const resultDot  = document.getElementById('result-dot');
-  const resultWrap = document.getElementById('result-wrap');
-  const placeholder= document.getElementById('result-placeholder');
-  const resultActs = document.getElementById('result-actions');
-  const downloadBtn= document.getElementById('download-btn');
-  const resetBtn   = document.getElementById('reset-btn');
-  const apiKeyInp  = document.getElementById('api-key');
-  const saveKeyBtn = document.getElementById('save-key-btn');
-  const keySaveMsg = document.getElementById('key-save-msg');
+/* ── ELEMENTS ── */
+const dropZone      = document.getElementById('drop-zone');
+const fileInput     = document.getElementById('file-input');
+const removeBtn     = document.getElementById('remove-btn');
+const resetBtn      = document.getElementById('reset-btn');
+const statusBar     = document.getElementById('status-bar');
+const statusText    = document.getElementById('status-text');
+const spinner       = document.getElementById('status-spinner');
+const queueSection  = document.getElementById('queue-section');
+const queueEl       = document.getElementById('image-queue');
+const queueStats    = document.getElementById('queue-stats');
+const progressWrap  = document.getElementById('progress-wrap');
+const progressFill  = document.getElementById('progress-fill');
+const progressLabel = document.getElementById('progress-label');
+const apiKeyInp     = document.getElementById('api-key');
+const saveKeyBtn    = document.getElementById('save-key-btn');
+const keySaveMsg    = document.getElementById('key-save-msg');
+const dlAllWrap     = document.getElementById('download-all-wrap');
+const dlAllBtn      = document.getElementById('download-all-btn');
+const addMoreBtn    = document.getElementById('add-more-btn');
+const blurAmountEl  = document.getElementById('blur-amount');
+const blurValEl     = document.getElementById('blur-val');
 
-  /* ── load saved key on startup ── */
-  const savedKey = localStorage.getItem('poof_api_key');
-  if (savedKey) {
-    apiKeyInp.value = savedKey;
-    showKeyMsg('✅ Saved key loaded', 'var(--success)');
+/* ── STATE ── */
+let queue = []; // { id, file, status:'pending'|'processing'|'done'|'error', resultBlob, resultUrl, errMsg }
+let concurrency = 1;
+let bgType = 'transparent';
+let fillColor = '#ffffff';
+let blurAmount = 12;
+let outputFormat = 'png';
+let isProcessing = false;
+
+/* ── API KEY ── */
+const savedKey = localStorage.getItem('poof_api_key');
+if (savedKey) { apiKeyInp.value = savedKey; showKeyMsg('✅ Saved key loaded', 'var(--success)'); }
+
+saveKeyBtn.addEventListener('click', () => {
+  const key = apiKeyInp.value.trim();
+  if (!key) {
+    localStorage.removeItem('poof_api_key');
+    saveKeyBtn.classList.remove('saved');
+    showKeyMsg('🗑️ Key cleared', 'var(--muted)');
+    return;
   }
+  localStorage.setItem('poof_api_key', key);
+  saveKeyBtn.textContent = '✅ Saved';
+  saveKeyBtn.classList.add('saved');
+  showKeyMsg('✅ Key saved to this browser', 'var(--success)');
+  setTimeout(() => { saveKeyBtn.textContent = '💾 Save'; saveKeyBtn.classList.remove('saved'); }, 2000);
+});
 
-  /* ── save key button ── */
-  saveKeyBtn.addEventListener('click', () => {
-    const key = apiKeyInp.value.trim();
-    if (!key) {
-      localStorage.removeItem('poof_api_key');
-      saveKeyBtn.classList.remove('saved');
-      showKeyMsg('🗑️ Saved key cleared', 'var(--muted)');
-      return;
-    }
-    localStorage.setItem('poof_api_key', key);
-    saveKeyBtn.textContent = '✅ Saved';
-    saveKeyBtn.classList.add('saved');
-    showKeyMsg('✅ Key saved to this browser', 'var(--success)');
-    setTimeout(() => { saveKeyBtn.textContent = '💾 Save'; saveKeyBtn.classList.remove('saved'); }, 2000);
+function showKeyMsg(text, color) {
+  keySaveMsg.textContent = text;
+  keySaveMsg.style.color = color;
+  keySaveMsg.style.display = '';
+  clearTimeout(keySaveMsg._t);
+  keySaveMsg._t = setTimeout(() => keySaveMsg.style.display = 'none', 3000);
+}
+
+/* ── BG TYPE CHIPS ── */
+document.querySelectorAll('.bg-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.bg-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    bgType = chip.dataset.bg;
+    document.getElementById('color-group').style.display = bgType === 'color' ? '' : 'none';
+    document.getElementById('blur-group').style.display = bgType === 'blur' ? '' : 'none';
+  });
+});
+
+/* ── COLOR SWATCHES ── */
+document.querySelectorAll('.color-swatch[data-color]').forEach(sw => {
+  sw.addEventListener('click', () => {
+    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+    sw.classList.add('active');
+    fillColor = sw.dataset.color;
+  });
+});
+const customColorInp = document.getElementById('custom-color');
+const customSwatch = document.getElementById('custom-swatch');
+customSwatch.addEventListener('click', () => customColorInp.click());
+customColorInp.addEventListener('input', () => {
+  fillColor = customColorInp.value;
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+  customSwatch.classList.add('active');
+});
+
+/* ── BLUR SLIDER ── */
+blurAmountEl.addEventListener('input', () => {
+  blurAmount = parseInt(blurAmountEl.value);
+  blurValEl.textContent = blurAmount + 'px';
+});
+
+/* ── CONCURRENCY TOGGLE ── */
+document.querySelectorAll('#concurrency-toggle button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#concurrency-toggle button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    concurrency = parseInt(btn.dataset.val);
+  });
+});
+
+/* ── DROP ZONE ── */
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  addFiles(Array.from(e.dataTransfer.files));
+});
+fileInput.addEventListener('change', () => {
+  addFiles(Array.from(fileInput.files));
+  fileInput.value = '';
+});
+
+addMoreBtn.addEventListener('click', () => fileInput.click());
+
+/* ── ADD FILES ── */
+function addFiles(files) {
+  const valid = files.filter(f => {
+    if (!f.type.startsWith('image/')) { showStatus(`Skipped "${f.name}" — not an image.`, 'error'); return false; }
+    if (f.size > 20 * 1024 * 1024) { showStatus(`Skipped "${f.name}" — exceeds 20 MB.`, 'error'); return false; }
+    if (queue.length >= 50) { showStatus('Max 50 images reached.', 'error'); return false; }
+    return true;
   });
 
-  function showKeyMsg(text, color) {
-    keySaveMsg.textContent = text;
-    keySaveMsg.style.color = color;
-    keySaveMsg.style.display = '';
-    clearTimeout(keySaveMsg._t);
-    keySaveMsg._t = setTimeout(() => keySaveMsg.style.display = 'none', 3000);
-  }
-
-  let selectedFile = null;
-
-  /* ── drop zone ── */
-  dropZone.addEventListener('click', () => fileInput.click());
-  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-  dropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    dropZone.classList.remove('drag-over');
-    const file = e.dataTransfer.files[0];
-    if (file) handleFile(file);
-  });
-  fileInput.addEventListener('change', () => {
-    if (fileInput.files[0]) handleFile(fileInput.files[0]);
+  valid.forEach(file => {
+    const id = Date.now() + Math.random();
+    const item = { id, file, status: 'pending', resultBlob: null, resultUrl: null, errMsg: null };
+    queue.push(item);
+    renderQueueItem(item);
   });
 
-  function handleFile(file) {
-    if (!file.type.startsWith('image/')) return showStatus('Please select a JPG, PNG, or WebP image.', 'error');
-    if (file.size > 20 * 1024 * 1024) return showStatus('File size exceeds 20 MB limit.', 'error');
-    selectedFile = file;
-    const url = URL.createObjectURL(file);
-    origImg.src = url;
-    previewSec.classList.add('visible');
-    resultImg.style.display = 'none';
-    placeholder.style.display = '';
-    resultDot.classList.remove('green');
-    resultActs.style.display = 'none';
+  if (queue.length > 0) {
+    queueSection.classList.add('visible');
     removeBtn.disabled = false;
-    showStatus(`"${file.name}" loaded — click Remove Background to process.`, 'info');
+    resetBtn.style.display = '';
   }
+  updateQueueStats();
+  if (valid.length) showStatus(`${valid.length} image(s) added — ready to process.`, 'info');
+}
 
-  /* ── remove ── */
-  removeBtn.addEventListener('click', async () => {
-    const apiKey = apiKeyInp.value.trim();
-    if (!apiKey) return showStatus('Please enter your poof.bg API key first.', 'error');
-    if (!selectedFile) return showStatus('Please select an image first.', 'error');
+/* ── RENDER QUEUE ITEM ── */
+function renderQueueItem(item) {
+  const div = document.createElement('div');
+  div.className = 'queue-item';
+  div.id = `qi-${item.id}`;
 
-    removeBtn.disabled = true;
-    showStatus('Processing your image…', 'info', true);
+  const previewUrl = URL.createObjectURL(item.file);
 
-    try {
-      const formData = new FormData();
-      formData.append('image_file', selectedFile);
-      formData.append('format', 'png');
-      formData.append('size', 'full');
-      formData.append('channels', 'rgba');
+  div.innerHTML = `
+    <div class="thumb-wrap">
+      <img src="${previewUrl}" alt="${item.file.name}" />
+      <div class="item-result-overlay" id="overlay-${item.id}">
+        <img src="" alt="Result" id="result-img-${item.id}" />
+      </div>
+      <span class="item-badge pending" id="badge-${item.id}">Pending</span>
+      <button class="item-remove" id="rm-${item.id}" title="Remove">✕</button>
+      <button class="result-toggle" id="toggle-${item.id}" style="display:none">👁 Original</button>
+      <button class="item-fullscreen" id="fs-${item.id}" title="View fullscreen">⛶</button>
+    </div>
+    <div class="item-info">
+      <div class="item-name">${item.file.name}</div>
+      <div class="item-size">${formatSize(item.file.size)}</div>
+    </div>
+    <div class="item-actions">
+      <a class="item-dl" id="dl-${item.id}" download="${item.file.name.replace(/\.[^.]+$/, '')}-nobg.${outputFormat}">⬇ Download</a>
+    </div>
+  `;
+  queueEl.appendChild(div);
 
-      let response;
-      try {
-        response = await fetch('https://api.poof.bg/v1/remove', {
-          method: 'POST',
-          headers: { 'x-api-key': apiKey },
-          body: formData
-        });
-      } catch (networkErr) {
-        // Likely a CORS or network failure
-        throw new Error('Network error: Could not reach api.poof.bg. This may be a CORS restriction — try running the app from a local server or backend proxy. Details: ' + networkErr.message);
-      }
-
-      if (!response.ok) {
-        let errMsg = `API error ${response.status}`;
-        try {
-          const rawText = await response.text();
-          try {
-            const errData = JSON.parse(rawText);
-            // Handle nested: { error: { message } } or flat: { message } or { error }
-            if (errData.error && typeof errData.error === 'object') {
-              errMsg = errData.error.message || errData.error.code || JSON.stringify(errData.error);
-            } else if (typeof errData.error === 'string') {
-              errMsg = errData.error;
-            } else if (errData.message) {
-              errMsg = errData.message;
-            } else {
-              errMsg = rawText.slice(0, 200);
-            }
-          } catch (_) {
-            errMsg = rawText.slice(0, 200) || errMsg;
-          }
-        } catch (_) {}
-        // Map common HTTP codes to helpful messages
-        if (response.status === 401 || response.status === 403) errMsg = 'Invalid or unauthorized API key. Check your key at dash.poof.bg.';
-        if (response.status === 402) errMsg = 'No credits remaining. Top up at dash.poof.bg.';
-        if (response.status === 429) errMsg = 'Rate limit reached. Please wait a moment and try again.';
-        throw new Error(errMsg);
-      }
-
-      const contentType = response.headers.get('content-type') || '';
-      // If the API returned JSON instead of an image, something went wrong
-      if (contentType.includes('application/json')) {
-        const errData = await response.json();
-        const msg = errData.message || errData.error || 'Unexpected JSON response from API.';
-        throw new Error(typeof msg === 'object' ? JSON.stringify(msg) : msg);
-      }
-
-      const blob = await response.blob();
-      const resultUrl = URL.createObjectURL(blob);
-      resultImg.src = resultUrl;
-      resultImg.style.display = '';
-      placeholder.style.display = 'none';
-      resultDot.classList.add('green');
-      downloadBtn.href = resultUrl;
-      resultActs.style.display = 'flex';
-      showStatus('Background removed successfully! Download your image below.', 'success');
-    } catch (err) {
-      showStatus(err.message, 'error');
-    } finally {
-      removeBtn.disabled = false;
-    }
+  // Remove button
+  document.getElementById(`rm-${item.id}`).addEventListener('click', e => {
+    e.stopPropagation();
+    removeFromQueue(item.id);
   });
 
-  /* ── reset ── */
-  resetBtn.addEventListener('click', () => {
-    selectedFile = null;
-    fileInput.value = '';
-    origImg.src = '';
-    resultImg.src = '';
-    resultImg.style.display = 'none';
-    placeholder.style.display = '';
-    resultDot.classList.remove('green');
-    resultActs.style.display = 'none';
-    previewSec.classList.remove('visible');
+  // Toggle before/after
+  let showingResult = true;
+  document.getElementById(`toggle-${item.id}`).addEventListener('click', () => {
+    const overlay = document.getElementById(`overlay-${item.id}`);
+    const toggleBtn = document.getElementById(`toggle-${item.id}`);
+    showingResult = !showingResult;
+    overlay.classList.toggle('visible', showingResult);
+    toggleBtn.textContent = showingResult ? '👁 Original' : '👁 Result';
+  });
+
+  // Fullscreen button
+  document.getElementById(`fs-${item.id}`).addEventListener('click', e => {
+    e.stopPropagation();
+    openLightbox(item);
+  });
+}
+
+function removeFromQueue(id) {
+  queue = queue.filter(i => i.id !== id);
+  const el = document.getElementById(`qi-${id}`);
+  if (el) el.remove();
+  if (queue.length === 0) {
+    queueSection.classList.remove('visible');
     removeBtn.disabled = true;
+    resetBtn.style.display = 'none';
+    dlAllWrap.classList.remove('visible');
     statusBar.className = 'status-bar';
-  });
-
-  /* ── status ── */
-  function showStatus(msg, type = 'info', loading = false) {
-    statusText.textContent = msg;
-    spinner.style.display = loading ? '' : 'none';
-    statusBar.className = `status-bar show ${type}`;
   }
+  updateQueueStats();
+}
+
+function updateQueueStats() {
+  const done  = queue.filter(i => i.status === 'done').length;
+  const error = queue.filter(i => i.status === 'error').length;
+  const total = queue.length;
+  queueStats.textContent = `${total} image${total !== 1 ? 's' : ''} · ${done} processed${error ? ` · ${error} failed` : ''}`;
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+/* ── UPDATE ITEM UI ── */
+function setItemStatus(item, status, msg = '') {
+  item.status = status;
+  const badge = document.getElementById(`badge-${item.id}`);
+  if (!badge) return;
+  badge.className = `item-badge ${status}`;
+  const labels = { pending: 'Pending', processing: 'Processing…', done: '✓ Done', error: '✗ Error' };
+  badge.textContent = labels[status] || status;
+  updateQueueStats();
+}
+
+function setItemResult(item, blob) {
+  item.resultBlob = blob;
+  item.resultUrl = URL.createObjectURL(blob);
+
+  const overlay = document.getElementById(`overlay-${item.id}`);
+  const resultImg = document.getElementById(`result-img-${item.id}`);
+  const dlBtn = document.getElementById(`dl-${item.id}`);
+  const toggleBtn = document.getElementById(`toggle-${item.id}`);
+  const fsBtn = document.getElementById(`fs-${item.id}`);
+
+  resultImg.src = item.resultUrl;
+  overlay.classList.add('visible');
+  dlBtn.href = item.resultUrl;
+  dlBtn.classList.add('visible');
+  toggleBtn.style.display = '';
+  fsBtn.classList.add('visible');
+}
+
+/* ── LIGHTBOX ── */
+const lightbox       = document.getElementById('lightbox');
+const lightboxImg    = document.getElementById('lightbox-img');
+const lightboxDl     = document.getElementById('lightbox-dl');
+const lightboxName   = document.getElementById('lightbox-filename');
+const lightboxClose  = document.getElementById('lightbox-close');
+const lightboxClose2 = document.getElementById('lightbox-close2');
+
+function openLightbox(item) {
+  if (!item.resultUrl) return;
+  lightboxImg.src = item.resultUrl;
+  lightboxDl.href = item.resultUrl;
+  lightboxDl.download = item.file.name.replace(/\.[^.]+$/, '') + '-nobg.' + (document.getElementById('output-format').value || 'png');
+  lightboxName.textContent = item.file.name;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxClose2.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+/* ── PROCESS ALL ── */
+removeBtn.addEventListener('click', async () => {
+  const apiKey = apiKeyInp.value.trim();
+  if (!apiKey) return showStatus('Please enter your poof.bg API key first.', 'error');
+
+  const pending = queue.filter(i => i.status === 'pending' || i.status === 'error');
+  if (pending.length === 0) return showStatus('No images to process.', 'info');
+
+  isProcessing = true;
+  removeBtn.disabled = true;
+  dlAllWrap.classList.remove('visible');
+
+  let completed = 0;
+  const total = pending.length;
+  progressWrap.classList.add('visible');
+  setProgress(0, total);
+  showStatus(`Processing ${total} image(s)…`, 'info', true);
+
+  // Process with concurrency limit
+  async function processOne(item) {
+    setItemStatus(item, 'processing');
+    try {
+      const resultBlob = await removeBackground(item.file, apiKey);
+      // Post-process background
+      const finalBlob = await applyBackground(resultBlob, item.file, bgType, fillColor, blurAmount);
+      setItemStatus(item, 'done');
+      setItemResult(item, finalBlob);
+    } catch (err) {
+      item.errMsg = err.message;
+      setItemStatus(item, 'error');
+    }
+    completed++;
+    setProgress(completed, total);
+  }
+
+  // Chunked concurrency runner
+  const chunks = chunkArray(pending, concurrency);
+  for (const chunk of chunks) {
+    await Promise.all(chunk.map(item => processOne(item)));
+  }
+
+  isProcessing = false;
+  removeBtn.disabled = false;
+  const doneCount  = queue.filter(i => i.status === 'done').length;
+  const errorCount = queue.filter(i => i.status === 'error').length;
+  const msg = errorCount
+    ? `Done! ${doneCount} succeeded, ${errorCount} failed.`
+    : `All ${doneCount} image(s) processed successfully!`;
+  showStatus(msg, errorCount ? 'error' : 'success');
+
+  if (doneCount > 0) dlAllWrap.classList.add('visible');
+  progressWrap.classList.remove('visible');
+  updateQueueStats();
+});
+
+function chunkArray(arr, size) {
+  const result = [];
+  for (let i = 0; i < arr.length; i += size) result.push(arr.slice(i, i + size));
+  return result;
+}
+
+function setProgress(done, total) {
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  progressFill.style.width = pct + '%';
+  progressLabel.textContent = `${done} / ${total}`;
+}
+
+/* ── REMOVE BACKGROUND (API CALL) ── */
+async function removeBackground(file, apiKey) {
+  const formData = new FormData();
+  formData.append('image_file', file);
+  formData.append('format', 'png');
+  formData.append('size', document.getElementById('output-size').value);
+  formData.append('channels', 'rgba');
+
+  let response;
+  try {
+    response = await fetch('https://api.poof.bg/v1/remove', {
+      method: 'POST',
+      headers: { 'x-api-key': apiKey },
+      body: formData
+    });
+  } catch (networkErr) {
+    throw new Error('Network error: Could not reach api.poof.bg. Details: ' + networkErr.message);
+  }
+
+  if (!response.ok) {
+    let errMsg = `API error ${response.status}`;
+    try {
+      const rawText = await response.text();
+      try {
+        const errData = JSON.parse(rawText);
+        if (errData.error && typeof errData.error === 'object') errMsg = errData.error.message || errData.error.code || JSON.stringify(errData.error);
+        else if (typeof errData.error === 'string') errMsg = errData.error;
+        else if (errData.message) errMsg = errData.message;
+        else errMsg = rawText.slice(0, 200);
+      } catch (_) { errMsg = rawText.slice(0, 200) || errMsg; }
+    } catch (_) {}
+    if (response.status === 401 || response.status === 403) errMsg = 'Invalid or unauthorized API key.';
+    if (response.status === 402) errMsg = 'No credits remaining. Top up at dash.poof.bg.';
+    if (response.status === 429) errMsg = 'Rate limit reached. Please wait and retry.';
+    throw new Error(errMsg);
+  }
+
+  const contentType = response.headers.get('content-type') || '';
+  if (contentType.includes('application/json')) {
+    const errData = await response.json();
+    throw new Error(errData.message || errData.error || 'Unexpected JSON from API.');
+  }
+
+  return await response.blob();
+}
+
+/* ── APPLY BACKGROUND OPTION ── */
+async function applyBackground(removedBlob, originalFile, bgType, color, blurPx) {
+  if (bgType === 'transparent') return removedBlob;
+
+  return new Promise((resolve, reject) => {
+    const fgImg = new Image();
+    fgImg.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = fgImg.naturalWidth;
+      canvas.height = fgImg.naturalHeight;
+      const ctx = canvas.getContext('2d');
+
+      if (bgType === 'white') {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      } else if (bgType === 'black') {
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      } else if (bgType === 'color') {
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      } else if (bgType === 'blur') {
+        // Draw blurred original as bg, then paste fg on top
+        const origImg = new Image();
+        origImg.onload = () => {
+          ctx.filter = `blur(${blurPx}px)`;
+          ctx.drawImage(origImg, -blurPx * 2, -blurPx * 2, canvas.width + blurPx * 4, canvas.height + blurPx * 4);
+          ctx.filter = 'none';
+          ctx.drawImage(fgImg, 0, 0);
+          const fmt = document.getElementById('output-format').value;
+          canvas.toBlob(blob => resolve(blob), fmt === 'webp' ? 'image/webp' : 'image/png');
+        };
+        origImg.onerror = reject;
+        origImg.src = URL.createObjectURL(originalFile);
+        return; // early return since async continues in origImg.onload
+      }
+
+      ctx.drawImage(fgImg, 0, 0);
+      const fmt = document.getElementById('output-format').value;
+      canvas.toBlob(blob => resolve(blob), fmt === 'webp' ? 'image/webp' : 'image/png');
+    };
+    fgImg.onerror = reject;
+    fgImg.src = URL.createObjectURL(removedBlob);
+  });
+}
+
+/* ── DOWNLOAD ALL AS ZIP ── */
+dlAllBtn.addEventListener('click', async () => {
+  const done = queue.filter(i => i.status === 'done' && i.resultBlob);
+  if (!done.length) return;
+  dlAllBtn.textContent = '⏳ Zipping…';
+  dlAllBtn.disabled = true;
+
+  const fmt = document.getElementById('output-format').value;
+  try {
+    const zip = new JSZip();
+    for (const item of done) {
+      const safeName = item.file.name.replace(/\.[^.]+$/, '') + `-nobg.${fmt}`;
+      zip.file(safeName, item.resultBlob);
+    }
+    const zipBlob = await zip.generateAsync({ type: 'blob' });
+    const url = URL.createObjectURL(zipBlob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'poof-removed-backgrounds.zip'; a.click();
+  } catch (err) {
+    showStatus('ZIP error: ' + err.message, 'error');
+  }
+  dlAllBtn.textContent = '⬇️ Download All as ZIP';
+  dlAllBtn.disabled = false;
+});
+
+/* ── RESET ── */
+resetBtn.addEventListener('click', () => {
+  queue = [];
+  queueEl.innerHTML = '';
+  queueSection.classList.remove('visible');
+  dlAllWrap.classList.remove('visible');
+  progressWrap.classList.remove('visible');
+  removeBtn.disabled = true;
+  resetBtn.style.display = 'none';
+  statusBar.className = 'status-bar';
+  fileInput.value = '';
+});
+
+/* ── STATUS ── */
+function showStatus(msg, type = 'info', loading = false) {
+  statusText.textContent = msg;
+  spinner.style.display = loading ? '' : 'none';
+  statusBar.className = `status-bar show ${type}`;
+}
 </script>
 </body>
 </html>
