@@ -617,13 +617,13 @@
   <div class="upload-card" id="drop-zone">
     <div class="upload-icon">🖼️</div>
     <h3>Drop images here</h3>
-    <p>or click to browse — select multiple images at once</p>
+    <p>or click to browse — up to 4 images at a time</p>
     <div class="formats">
       <span class="format-chip">JPG</span>
       <span class="format-chip">PNG</span>
       <span class="format-chip">WebP</span>
       <span class="format-chip">max 20 MB each</span>
-      <span class="format-chip">up to 50 images</span>
+      <span class="format-chip">up to 4 images</span>
     </div>
     <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" multiple />
   </div>
@@ -806,12 +806,19 @@ addMoreBtn.addEventListener('click', () => fileInput.click());
 
 /* ── ADD FILES ── */
 function addFiles(files) {
-  const valid = files.filter(f => {
-    if (!f.type.startsWith('image/')) { showStatus(`Skipped "${f.name}" — not an image.`, 'error'); return false; }
-    if (f.size > 20 * 1024 * 1024) { showStatus(`Skipped "${f.name}" — exceeds 20 MB.`, 'error'); return false; }
-    if (queue.length >= 50) { showStatus('Max 50 images reached.', 'error'); return false; }
+  const remaining = 4 - queue.length;
+  if (remaining <= 0) { showStatus('Max 4 images allowed. Clear some to add more.', 'error'); return; }
+
+  let skipped = 0;
+  const valid = files.slice(0, remaining).filter(f => {
+    if (!f.type.startsWith('image/')) { showStatus(`Skipped "${f.name}" — not an image.`, 'error'); skipped++; return false; }
+    if (f.size > 20 * 1024 * 1024) { showStatus(`Skipped "${f.name}" — exceeds 20 MB.`, 'error'); skipped++; return false; }
     return true;
   });
+
+  if (files.length > remaining) {
+    showStatus(`Only ${remaining} slot(s) left — first ${remaining} image(s) added.`, 'info');
+  }
 
   valid.forEach(file => {
     const id = Date.now() + Math.random();
@@ -826,7 +833,7 @@ function addFiles(files) {
     resetBtn.style.display = '';
   }
   updateQueueStats();
-  if (valid.length) showStatus(`${valid.length} image(s) added — ready to process.`, 'info');
+  if (valid.length && files.length <= remaining) showStatus(`${valid.length} image(s) added — ready to process.`, 'info');
 }
 
 /* ── RENDER QUEUE ITEM ── */
@@ -899,7 +906,9 @@ function updateQueueStats() {
   const done  = queue.filter(i => i.status === 'done').length;
   const error = queue.filter(i => i.status === 'error').length;
   const total = queue.length;
-  queueStats.textContent = `${total} image${total !== 1 ? 's' : ''} · ${done} processed${error ? ` · ${error} failed` : ''}`;
+  queueStats.textContent = `${total}/4 images · ${done} processed${error ? ` · ${error} failed` : ''}`;
+  // Hide "Add More" when at capacity
+  addMoreBtn.style.display = total >= 4 ? 'none' : '';
 }
 
 function formatSize(bytes) {
