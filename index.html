@@ -1,360 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AK's Tools</title>
- 	<link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+  <title>Ash Tools</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; }
-
-    :root {
-      --bg:        #080c12;
-      --surface:   #0e1520;
-      --card:      #111827;
-      --border:    #1e2d40;
-      --border-h:  #2a4060;
-      --text:      #e2eaf4;
-      --muted:     #5a7a99;
-      --accent:    #3b82f6;
-      --accent-g:  #60a5fa;
-    }
-
-    body {
-      font-family: 'Outfit', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Grid bg */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Navbar */
-    .navbar {
-      background: rgba(8,12,18,0.85) !important;
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border) !important;
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .navbar-brand {
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--text) !important;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.95rem;
-      color: #fff;
-      flex-shrink: 0;
-    }
-
-    .brand-ak { color: var(--accent-g); }
-
-    .nav-badge {
-      font-size: 0.7rem;
-      font-weight: 500;
-      background: rgba(59,130,246,0.1);
-      color: var(--accent-g);
-      border: 1px solid rgba(59,130,246,0.2);
-      padding: 3px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.03em;
-    }
-
-    /* Hero */
-    .hero {
-      position: relative;
-      z-index: 1;
-      padding: 5rem 0 3.5rem;
-      text-align: center;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-g);
-      background: rgba(59,130,246,0.08);
-      border: 1px solid rgba(59,130,246,0.18);
-      padding: 5px 14px;
-      border-radius: 20px;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: blink 2s ease-in-out infinite;
-    }
-
-    @keyframes blink {
-      0%,100% { opacity:1; } 50% { opacity:0.3; }
-    }
-
-    .hero h1 {
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      color: var(--text);
-    }
-
-    .hero h1 .gradient-text {
-      background: linear-gradient(120deg, #60a5fa, #818cf8, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 1rem;
-      font-weight: 400;
-      max-width: 400px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-
-    /* Cards */
-    .tools-section {
-      position: relative;
-      z-index: 1;
-      padding-bottom: 5rem;
-    }
-
-    .tool-card {
-      display: block;
-      text-decoration: none;
-      color: var(--text);
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 2rem 1.75rem;
-      transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
-      position: relative;
-      overflow: hidden;
-      height: 100%;
-    }
-
-    .tool-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 10%; right: 10%;
-      height: 1px;
-      border-radius: 1px;
-      transition: opacity 0.3s;
-      opacity: 0;
-    }
-
-    .card-qr::before    { background: linear-gradient(90deg, transparent, #3b82f6, transparent); }
-    .card-webp::before  { background: linear-gradient(90deg, transparent, #10b981, transparent); }
-    .card-bg::before    { background: linear-gradient(90deg, transparent, #f59e0b, transparent); }
-    .card-bgv2::before  { background: linear-gradient(90deg, transparent, #ec4899, transparent); }
-    .card-favicon::before { background: linear-gradient(90deg, transparent, #8b5cf6, transparent); }
-    .icon-bgv2 { background: rgba(236,72,153,0.1); color: #f472b6; border: 1px solid rgba(236,72,153,0.18); }
-    .icon-favicon { background: rgba(139,92,246,0.1); color: #a78bfa; border: 1px solid rgba(139,92,246,0.18); }
-
-    .tool-card:hover {
-      border-color: var(--border-h);
-      background: #141f30;
-      transform: translateY(-5px);
-      color: var(--text);
-    }
-
-    .tool-card:hover::before { opacity: 1; }
-
-    .tool-card .arrow {
-      position: absolute;
-      top: 1.25rem; right: 1.25rem;
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem;
-      color: var(--muted);
-      transition: all 0.25s;
-    }
-
-    .tool-card:hover .arrow {
-      border-color: var(--accent);
-      color: var(--accent-g);
-      background: rgba(59,130,246,0.08);
-      transform: rotate(45deg);
-    }
-
-    .tool-icon-wrap {
-      width: 60px; height: 60px;
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.55rem;
-      margin-bottom: 1.4rem;
-    }
-
-    .icon-qr   { background: rgba(59,130,246,0.1);  color: #60a5fa; border: 1px solid rgba(59,130,246,0.18); }
-    .icon-webp { background: rgba(16,185,129,0.1);  color: #34d399; border: 1px solid rgba(16,185,129,0.18); }
-    .icon-bg   { background: rgba(245,158,11,0.1);  color: #fbbf24; border: 1px solid rgba(245,158,11,0.18); }
-
-    .tool-name {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      letter-spacing: -0.01em;
-    }
-
-    .tool-desc {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
-
-    .tool-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .tag {
-      font-size: 0.68rem;
-      font-weight: 500;
-      padding: 3px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.03em;
-    }
-
-    .tag-blue   { background: rgba(59,130,246,0.1);  color: #60a5fa;  border: 1px solid rgba(59,130,246,0.15); }
-    .tag-green  { background: rgba(16,185,129,0.1);  color: #34d399;  border: 1px solid rgba(16,185,129,0.15); }
-    .tag-amber  { background: rgba(245,158,11,0.1);  color: #fbbf24;  border: 1px solid rgba(245,158,11,0.15); }
-    .tag-purple { background: rgba(139,92,246,0.1);  color: #a78bfa;  border: 1px solid rgba(139,92,246,0.15); }
-    .tag-pink   { background: rgba(236,72,153,0.1);  color: #f472b6;  border: 1px solid rgba(236,72,153,0.15); }
-
-    /* Footer */
-    footer {
-      position: relative;
-      z-index: 1;
-      margin-top: auto;
-      border-top: 1px solid var(--border);
-      padding: 1.4rem 0;
-      background: rgba(8,12,18,0.6);
-    }
-
-    footer span {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    footer .dot {
-      display: inline-block;
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-      margin: 0 8px;
-      vertical-align: middle;
-      animation: blink 2s ease-in-out infinite;
-    }
-
-    /* Animations */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(22px);
-      animation: fadeUp 0.55s ease forwards;
-    }
-    @keyframes fadeUp {
-      to { opacity:1; transform:translateY(0); }
-    }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
-    .delay-4 { animation-delay: 0.4s; }
-    .delay-5 { animation-delay: 0.5s; }
-    .delay-6 { animation-delay: 0.6s; }
-  
-    /* Search Box */
-    .search-wrapper {
-      max-width: 480px;
-      margin: 2.5rem auto 0;
-      position: relative;
-    }
-    .search-wrapper i {
-      position: absolute;
-      left: 1.25rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      font-size: 1.1rem;
-    }
-    .search-input {
-      width: 100%;
-      background: rgba(17, 24, 39, 0.6);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 0.85rem 1.5rem 0.85rem 3rem;
-      color: var(--text);
-      font-size: 0.95rem;
-      transition: all 0.3s;
-      outline: none;
-      backdrop-filter: blur(10px);
-    }
-    .search-input:focus {
-      background: rgba(17, 24, 39, 0.9);
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-    }
-    .search-input::placeholder {
-      color: var(--muted);
-    }
-
-</style>
 </head>
-<body>
+
+<body class="page-index">
 
   <!-- Navbar -->
-  <nav class="navbar navbar-dark">
+  <nav class="ak-navbar">
     <div class="container">
-      <a class="navbar-brand" href="#">
-        <div class="brand-icon"><i class="bi bi-tools"></i></div>
-        <span class="brand-ak">AK's</span>&nbsp;Tools
-      </a>
-      <span class="nav-badge"><i class="bi bi-grid-3x3-gap-fill me-1"></i> 4 tools</span>
+      <div class="ak-navbar-flex">
+        <a class="brand-new" href="index.html">
+          <img src="assets/favicon.svg" alt="Icon" class="brand-logo-img">
+          <div class="brand-text-wrap">
+            <span class="brand-ash">Ash</span>
+            <span class="brand-tools">Tools</span>
+          </div>
+        </a>
+        <div class="nav-badge" style="display:flex; align-items:center; gap:6px;">
+          <i class="bi bi-grid-3x3-gap-fill"></i> 5 tools
+        </div>
+      </div>
     </div>
   </nav>
 
@@ -362,12 +37,13 @@
   <section class="hero fade-up delay-1">
     <div class="container">
       <div class="hero-eyebrow">Personal Toolkit</div>
-      <h1>Tools built for<br><span class="gradient-text">everyday use</span></h1>
+      <h1>Tools built for <span class="gradient-text">everyday use</span></h1>
       <p>A clean collection of utilities — fast, simple, and always within reach.</p>
 
       <div class="search-wrapper">
         <i class="bi bi-search"></i>
-        <input type="text" id="searchInput" class="search-input" placeholder="Search for tools (e.g., bg remover, qr)..." autocomplete="off">
+        <input type="text" id="searchInput" class="search-input"
+          placeholder="Search for tools (e.g., bg remover, qr)..." autocomplete="off">
       </div>
 
     </div>
@@ -444,6 +120,22 @@
           </a>
         </div>
 
+        <!-- Thumbnail Downloader -->
+        <div class="col-12 col-md-4 fade-up delay-6">
+          <a href="thumbnail-downloader.html" class="tool-card card-thumbnail">
+            <div class="arrow"><i class="bi bi-arrow-up-right"></i></div>
+            <div class="tool-icon-wrap icon-thumbnail">
+              <i class="bi bi-youtube"></i>
+            </div>
+            <div class="tool-name">Thumbnail Downloader</div>
+            <div class="tool-desc">Extract high-quality thumbnails from any YouTube video instantly.</div>
+            <div class="tool-tags">
+              <span class="tag tag-pink">Media</span>
+              <span class="tag tag-amber">Social</span>
+            </div>
+          </a>
+        </div>
+
       </div>
     </div>
   </section>
@@ -451,35 +143,13 @@
   <!-- Footer -->
   <footer class="fade-up delay-6">
     <div class="container text-center">
-      <span>AK's Tools<span class="dot"></span>Your personal utility belt</span>
+      <span><span class="brand-ash">Ash</span> Tools<span class="dot"></span>Your personal utility belt</span>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const searchInput = document.getElementById('searchInput');
-      const toolCards = document.querySelectorAll('.tools-section .col-12');
-
-      searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase().trim();
-        
-        toolCards.forEach(card => {
-          const textContent = card.innerText.toLowerCase();
-          if (textContent.includes(searchTerm)) {
-            card.style.display = 'block';
-            // slight animation reset for smooth feeling
-            card.style.animation = 'none';
-            card.offsetHeight; // trigger reflow
-            card.style.animation = 'fadeUp 0.4s ease forwards';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-    });
-  </script>
-
+  <script src="assets/js/script.js"></script>
+  
 </body>
+
 </html>

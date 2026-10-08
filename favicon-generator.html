@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favicon Generator | AK's Tools</title>
+    <title>Favicon Generator | Ash Tools</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
@@ -32,96 +33,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        body {
-            background-color: #080c12;
-            color: #e2eaf4;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        /* Grid background matching index.html */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: -2;
-        }
-        /* Atmospheric glow */
-        .glow-orb {
-            position: fixed;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80vw;
-            height: 60vh;
-            background: radial-gradient(ellipse, rgba(99, 102, 241, 0.12) 0%, rgba(0,0,0,0) 70%);
-            pointer-events: none;
-            z-index: -1;
-        }
-        .glass-card {
-            background: rgba(17, 24, 39, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
-        }
-        .gradient-text {
-            background: linear-gradient(120deg, #60a5fa, #818cf8, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .drag-active {
-            border-color: #818cf8 !important;
-            background-color: rgba(99, 102, 241, 0.1) !important;
-            box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.1);
-        }
-        .checkerboard {
-            background-image: 
-                linear-gradient(45deg, #1f2937 25%, transparent 25%), 
-                linear-gradient(-45deg, #1f2937 25%, transparent 25%), 
-                linear-gradient(45deg, transparent 75%, #1f2937 75%), 
-                linear-gradient(-45deg, transparent 75%, #1f2937 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-            background-color: #111827;
-        }
-        .btn-magic {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            background-size: 200% auto;
-            transition: 0.4s;
-        }
-        .btn-magic:hover {
-            background-position: right center;
-            box-shadow: 0 0 25px rgba(124, 58, 237, 0.5);
-            transform: translateY(-2px);
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #080c12; }
-        ::-webkit-scrollbar-thumb { background: #1e2d40; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
-    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 </head>
-<body class="antialiased">
+
+<body class="antialiased page-favicon-generator">
     <div class="glow-orb"></div>
-    
+
     <!-- Navbar -->
     <nav class="sticky top-0 z-50 bg-brand-bg/85 backdrop-blur-lg border-b border-brand-border">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="container">
             <div class="flex justify-between h-16 items-center">
-                <a href="index.html" class="flex items-center gap-3 group text-slate-300 hover:text-white transition-colors">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all">
+                <a href="index.html"
+                    class="flex items-center gap-3 group text-slate-300 hover:text-white transition-colors">
+                    <div
+                        class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all">
                         <i class="fa-solid fa-arrow-left text-sm"></i>
                     </div>
-                    <span class="font-bold text-lg tracking-tight">AK's Tools</span>
+                    <span class="font-bold text-lg tracking-tight brand-text-wrap" style="font-size:1.2rem; gap:4px;"><span class="brand-ash">Ash</span><span class="brand-tools">Tools</span></span>
                 </a>
-                <div class="px-3 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-semibold tracking-wider uppercase">
+                <div
+                    class="px-3 py-1.5 rounded-full border-[1px] border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-semibold tracking-wider uppercase">
                     Favicon Generator
                 </div>
             </div>
@@ -129,38 +64,51 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 relative z-10">
-        
+    <main class="container py-5 relative z-10">
+
         <div class="text-center mb-14">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-xs font-medium mb-5">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full border-[1px] border-blue-500/20 bg-blue-500/10 text-blue-400 text-xs font-medium mb-5">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> Magic Design Tool
             </div>
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-5 tracking-tight"><span class="text-white">Generate perfect</span> <span class="gradient-text">favicons</span></h1>
-            <p class="text-lg text-slate-400 max-w-2xl mx-auto">Create beautiful, platform-ready icons for web, iOS, and Android in one click. Fully private, instant browser processing.</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-5 tracking-tight"><span class="text-white">Generate
+                    perfect</span> <span class="gradient-text">favicons</span></h1>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto">Create beautiful, platform-ready icons for web, iOS, and
+                Android in one click. Fully private, instant browser processing.</p>
         </div>
 
         <div class="glass-card rounded-3xl overflow-hidden">
             <div class="grid grid-cols-1 md:grid-cols-2">
-                
+
                 <!-- Left: Upload Section -->
-                <div class="p-8 md:p-10 border-b md:border-b-0 md:border-r border-slate-700/50 bg-slate-800/10 relative group/upload">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-70"></div>
+                <div
+                    class="p-8 md:p-10 border-b md:border-b-0 md:border-r border-slate-700/50 bg-slate-800/10 relative group/upload">
+                    <div
+                        class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-70">
+                    </div>
                     <h2 class="text-xl font-bold mb-2 text-white flex items-center gap-2">
-                        <span class="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 text-sm">1</span> 
+                        <span
+                            class="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 text-sm">1</span>
                         Upload Image
                     </h2>
-                    <p class="text-sm text-slate-400 mb-8">Upload a square PNG, JPG, or SVG (at least 512x512px) with a transparent background for best results.</p>
-                    
-                    <div id="dropzone" class="border-2 border-dashed border-slate-600 rounded-2xl p-12 text-center cursor-pointer hover:border-indigo-400 hover:bg-indigo-500/5 transition-all duration-300 group" onclick="document.getElementById('file-input').click()">
-                        <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-2xl bg-slate-800/80 border border-slate-700 shadow-xl mb-5 group-hover:scale-110 group-hover:shadow-indigo-500/30 transition-all duration-300">
+                    <p class="text-sm text-slate-400 mb-8">Upload a square PNG, JPG, or SVG (at least 512x512px) with a
+                        transparent background for best results.</p>
+
+                    <div id="dropzone"
+                        class="border-2 border-dashed border-slate-600 rounded-2xl p-12 text-center cursor-pointer hover:border-indigo-400 hover:bg-indigo-500/5 transition-all duration-300 group"
+                        onclick="document.getElementById('file-input').click()">
+                        <div
+                            class="mx-auto flex items-center justify-center h-20 w-20 rounded-2xl bg-slate-800/80 border-[1px] border-slate-700 shadow-xl mb-5 group-hover:scale-110 group-hover:shadow-indigo-500/30 transition-all duration-300">
                             <i class="fa-solid fa-cloud-arrow-up text-3xl gradient-text"></i>
                         </div>
-                        <p class="text-lg font-semibold text-slate-300 group-hover:text-white transition-colors">Click or drag image here</p>
+                        <p class="text-lg font-semibold text-slate-300 group-hover:text-white transition-colors">Click
+                            or drag image here</p>
                         <p class="text-sm text-slate-500 mt-2">Supports PNG, JPG, SVG up to 10MB</p>
                         <input type="file" id="file-input" class="hidden" accept="image/png, image/jpeg, image/svg+xml">
                     </div>
 
-                    <div id="error-message" class="hidden mt-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3">
+                    <div id="error-message"
+                        class="hidden mt-6 p-4 bg-red-500/10 border-[1px] border-red-500/20 rounded-xl flex items-start gap-3">
                         <i class="fa-solid fa-circle-exclamation text-red-400 mt-0.5"></i>
                         <p id="error-text" class="text-red-300 text-sm">Error loading image.</p>
                     </div>
@@ -169,8 +117,10 @@
                 <!-- Right: Preview & Download -->
                 <div class="p-8 md:p-10 relative bg-slate-900/30">
                     <!-- Empty State Overlay -->
-                    <div id="empty-state" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-brand-card/70 backdrop-blur-[4px] p-8 text-center transition-opacity duration-300">
-                        <div class="w-20 h-20 rounded-full border border-slate-700 bg-slate-800/50 flex items-center justify-center mb-5 shadow-lg">
+                    <div id="empty-state"
+                        class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-brand-card/70 backdrop-blur-[4px] p-8 text-center transition-opacity duration-300">
+                        <div
+                            class="w-20 h-20 rounded-full border-[1px] border-slate-700 bg-slate-800/50 flex items-center justify-center mb-5 shadow-lg">
                             <i class="fa-solid fa-layer-group text-3xl text-slate-500"></i>
                         </div>
                         <p class="text-slate-300 font-medium text-lg tracking-wide">Waiting for magic...</p>
@@ -178,19 +128,27 @@
                     </div>
 
                     <h2 class="text-xl font-bold mb-6 text-white flex items-center gap-2">
-                        <span class="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm">2</span> 
+                        <span
+                            class="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm">2</span>
                         Preview & Export
                     </h2>
-                    
-                    <div class="flex items-center gap-6 mb-8 p-5 rounded-2xl bg-slate-800/40 border border-slate-700/50 hover:bg-slate-800/60 transition-colors">
-                        <div class="checkerboard w-24 h-24 rounded-xl shadow-2xl overflow-hidden border border-slate-600 flex items-center justify-center relative">
+
+                    <div
+                        class="flex items-center gap-6 mb-8 p-5 rounded-2xl bg-slate-800/40 border-[1px] border-slate-700/50 hover:bg-slate-800/60 transition-colors">
+                        <div
+                            class="checkerboard w-24 h-24 rounded-xl shadow-2xl overflow-hidden border-[1px] border-slate-600 flex items-center justify-center relative">
                             <img id="preview-img" class="max-w-[80%] max-h-[80%] drop-shadow-2xl hidden" alt="Preview">
                         </div>
                         <div>
-                            <p class="text-base font-semibold text-white truncate max-w-[200px]" id="file-name">filename.png</p>
+                            <p class="text-base font-semibold text-white truncate max-w-[200px]" id="file-name">
+                                filename.png</p>
                             <div class="flex items-center gap-2 mt-2">
-                                <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-700 text-xs text-slate-400 font-mono" id="file-info">512 x 512</span>
-                                <span class="px-2 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-400 font-medium"><i class="fa-solid fa-check mr-1"></i> Ready</span>
+                                <span
+                                    class="px-2.5 py-1 rounded-md bg-slate-900 border-[1px] border-slate-700 text-xs text-slate-400 font-mono"
+                                    id="file-info">512 x 512</span>
+                                <span
+                                    class="px-2 py-1 rounded-md bg-emerald-500/10 border-[1px] border-emerald-500/20 text-xs text-emerald-400 font-medium"><i
+                                        class="fa-solid fa-check mr-1"></i> Ready</span>
                             </div>
                         </div>
                     </div>
@@ -198,15 +156,40 @@
                     <div class="space-y-4 mb-8">
                         <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Included in Package</h3>
                         <ul class="text-sm text-slate-300 space-y-3">
-                            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-400 text-lg shadow-sm"></i> <span>Legacy <code class="text-xs bg-slate-800/80 border border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">favicon.ico</code> (32x32)</span></li>
-                            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-400 text-lg shadow-sm"></i> <span>Web <code class="text-xs bg-slate-800/80 border border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">16x16</code> & <code class="text-xs bg-slate-800/80 border border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">32x32</code></span></li>
-                            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-400 text-lg shadow-sm"></i> <span>Apple Touch <code class="text-xs bg-slate-800/80 border border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">180x180</code></span></li>
-                            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-400 text-lg shadow-sm"></i> <span>Android Chrome <code class="text-xs bg-slate-800/80 border border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">192x192</code> & <code class="text-xs bg-slate-800/80 border border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">512x512</code></span></li>
-                            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-indigo-400 text-lg shadow-sm"></i> <span>PWA Manifest <code class="text-xs bg-slate-800/80 border border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">site.webmanifest</code></span></li>
+                            <li class="flex items-center gap-3"><i
+                                    class="fa-solid fa-circle-check text-indigo-400 text-lg shadow-sm"></i> <span>Legacy
+                                    <code
+                                        class="text-xs bg-slate-800/80 border-[1px] border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">favicon.ico</code>
+                                    (32x32)</span></li>
+                            <li class="flex items-center gap-3"><i
+                                    class="fa-solid fa-circle-check text-indigo-400 text-lg shadow-sm"></i> <span>Web
+                                    <code
+                                        class="text-xs bg-slate-800/80 border-[1px] border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">16x16</code>
+                                    & <code
+                                        class="text-xs bg-slate-800/80 border-[1px] border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">32x32</code></span>
+                            </li>
+                            <li class="flex items-center gap-3"><i
+                                    class="fa-solid fa-circle-check text-indigo-400 text-lg shadow-sm"></i> <span>Apple
+                                    Touch <code
+                                        class="text-xs bg-slate-800/80 border-[1px] border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">180x180</code></span>
+                            </li>
+                            <li class="flex items-center gap-3"><i
+                                    class="fa-solid fa-circle-check text-indigo-400 text-lg shadow-sm"></i>
+                                <span>Android Chrome <code
+                                        class="text-xs bg-slate-800/80 border-[1px] border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">192x192</code>
+                                    & <code
+                                        class="text-xs bg-slate-800/80 border-[1px] border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">512x512</code></span>
+                            </li>
+                            <li class="flex items-center gap-3"><i
+                                    class="fa-solid fa-circle-check text-indigo-400 text-lg shadow-sm"></i> <span>PWA
+                                    Manifest <code
+                                        class="text-xs bg-slate-800/80 border-[1px] border-slate-700 px-1.5 py-0.5 rounded text-indigo-300">site.webmanifest</code></span>
+                            </li>
                         </ul>
                     </div>
 
-                    <button id="generate-btn" class="w-full btn-magic text-white font-bold py-4 px-4 rounded-xl shadow-lg flex items-center justify-center gap-2">
+                    <button id="generate-btn"
+                        class="w-full btn-magic text-white font-bold py-4 px-4 rounded-xl shadow-lg flex items-center justify-center gap-2">
                         <i class="fa-solid fa-bolt text-yellow-300"></i> Generate & Download ZIP
                     </button>
                 </div>
@@ -214,224 +197,35 @@
         </div>
 
         <!-- HTML Instructions Code Block -->
-        <div id="instructions-panel" class="hidden mt-8 glass-card rounded-2xl overflow-hidden border border-slate-700/50">
+        <div id="instructions-panel"
+            class="hidden mt-8 glass-card rounded-2xl overflow-hidden border-[1px] border-slate-700/50">
             <div class="flex items-center justify-between px-6 py-4 bg-slate-800/50 border-b border-slate-700/50">
                 <div class="flex items-center gap-2 text-white font-medium">
                     <i class="fa-solid fa-code text-indigo-400"></i> Setup Instructions
                 </div>
-                <button onclick="copyCode()" id="copy-btn" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors text-sm flex items-center gap-2 border border-slate-700">
+                <button onclick="copyCode()" id="copy-btn"
+                    class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors text-sm flex items-center gap-2 border-[1px] border-slate-700">
                     <i class="fa-regular fa-copy"></i> Copy Code
                 </button>
             </div>
             <div class="p-6 bg-slate-900/30">
-                <p class="text-slate-300 text-sm mb-2 font-medium">1. Extract the downloaded ZIP into your website's root directory.</p>
-                <p class="text-slate-300 text-sm mb-5 font-medium">2. Add this code to the <code class="bg-slate-800 border border-slate-700 text-indigo-300 px-1.5 py-0.5 rounded">&lt;head&gt;</code> of your HTML files:</p>
+                <p class="text-slate-300 text-sm mb-2 font-medium">1. Extract the downloaded ZIP into your website's
+                    root directory.</p>
+                <p class="text-slate-300 text-sm mb-5 font-medium">2. Add this code to the <code
+                        class="bg-slate-800 border-[1px] border-slate-700 text-indigo-300 px-1.5 py-0.5 rounded">&lt;head&gt;</code>
+                    of your HTML files:</p>
                 <div class="relative group">
-                    <pre class="bg-[#080c12] border border-slate-700/50 p-5 rounded-xl overflow-x-auto shadow-inner"><code id="html-code" class="text-indigo-300 font-mono text-sm leading-relaxed">&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;
-&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"&gt;
-&lt;link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"&gt;
-&lt;link rel="manifest" href="/site.webmanifest"&gt;</code></pre>
+                    <pre
+                        class="bg-[#080c12] border-[1px] border-slate-700/50 p-5 rounded-xl overflow-x-auto shadow-inner"><code id="html-code" class="text-indigo-300 font-mono text-sm leading-relaxed">&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;
+                        &lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"&gt;
+                        &lt;link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"&gt;
+                        &lt;link rel="manifest" href="/site.webmanifest"&gt;</code></pre>
                 </div>
             </div>
-        </div>
     </main>
 
-    <script>
-        const dropzone = document.getElementById('dropzone');
-        const fileInput = document.getElementById('file-input');
-        const emptyState = document.getElementById('empty-state');
-        const previewImg = document.getElementById('preview-img');
-        const fileNameEl = document.getElementById('file-name');
-        const fileInfoEl = document.getElementById('file-info');
-        const generateBtn = document.getElementById('generate-btn');
-        const instructionsPanel = document.getElementById('instructions-panel');
-        const errorMsg = document.getElementById('error-message');
-        const errorText = document.getElementById('error-text');
-
-        let originalImage = null;
-
-        // Drag and Drop Events
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropzone.addEventListener(eventName, preventDefaults, false);
-        });
-
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropzone.addEventListener(eventName, () => dropzone.classList.add('drag-active'), false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropzone.addEventListener(eventName, () => dropzone.classList.remove('drag-active'), false);
-        });
-
-        dropzone.addEventListener('drop', (e) => {
-            let dt = e.dataTransfer;
-            let files = dt.files;
-            handleFiles(files);
-        });
-
-        fileInput.addEventListener('change', function() {
-            handleFiles(this.files);
-        });
-
-        function handleFiles(files) {
-            errorMsg.classList.add('hidden');
-            if (files.length === 0) return;
-            
-            const file = files[0];
-            if (!file.type.match('image.*')) {
-                showError("Please upload an image file (PNG, JPG, SVG).");
-                return;
-            }
-
-            fileNameEl.textContent = file.name;
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    originalImage = img;
-                    previewImg.src = img.src;
-                    previewImg.classList.remove('hidden');
-                    fileInfoEl.textContent = `${img.width} x ${img.height} px`;
-                    
-                    // Fade out empty state
-                    emptyState.style.opacity = '0';
-                    setTimeout(() => emptyState.classList.add('hidden'), 300);
-                    
-                    if (img.width !== img.height) {
-                        showError("Warning: Image is not square. Icons might look stretched. A square image is recommended.");
-                    }
-                }
-                img.onerror = function() {
-                    showError("Failed to read image data.");
-                }
-                img.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-
-        function showError(msg) {
-            errorText.textContent = msg;
-            errorMsg.classList.remove('hidden');
-        }
-
-        // Generate and Zip process
-        generateBtn.addEventListener('click', async () => {
-            if (!originalImage) {
-                // Shake animation for empty state if trying to generate without image
-                emptyState.style.transform = 'scale(1.05)';
-                setTimeout(() => emptyState.style.transform = 'scale(1)', 200);
-                return;
-            }
-
-            // UI feedback
-            const originalBtnText = generateBtn.innerHTML;
-            generateBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Generating Magic...';
-            generateBtn.disabled = true;
-            generateBtn.classList.add('opacity-80', 'cursor-not-allowed');
-
-            try {
-                const zip = new JSZip();
-                
-                // Helper to resize and add to zip
-                const addSize = (size, filename) => {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = size;
-                    canvas.height = size;
-                    const ctx = canvas.getContext('2d');
-                    
-                    // Smoothing
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high';
-                    
-                    ctx.clearRect(0, 0, size, size);
-                    ctx.drawImage(originalImage, 0, 0, size, size);
-                    
-                    const base64Data = canvas.toDataURL('image/png').split(',')[1];
-                    zip.file(filename, base64Data, {base64: true});
-                };
-
-                // Standard sizes
-                addSize(16, "favicon-16x16.png");
-                addSize(32, "favicon-32x32.png");
-                addSize(32, "favicon.ico"); // Works perfectly as basic fallback
-                addSize(180, "apple-touch-icon.png");
-                addSize(192, "android-chrome-192x192.png");
-                addSize(512, "android-chrome-512x512.png");
-
-                // Generate webmanifest JSON
-                const manifest = {
-                    "name": "My Awesome App",
-                    "short_name": "App",
-                    "icons": [
-                        {
-                            "src": "/android-chrome-192x192.png",
-                            "sizes": "192x192",
-                            "type": "image/png"
-                        },
-                        {
-                            "src": "/android-chrome-512x512.png",
-                            "sizes": "512x512",
-                            "type": "image/png"
-                        }
-                    ],
-                    "theme_color": "#080c12",
-                    "background_color": "#080c12",
-                    "display": "standalone"
-                };
-                zip.file("site.webmanifest", JSON.stringify(manifest, null, 4));
-
-                // Generate and Trigger Download
-                const content = await zip.generateAsync({type:"blob"});
-                saveAs(content, "favicon_package.zip");
-
-                // Show instructions
-                instructionsPanel.classList.remove('hidden');
-                // Small animation
-                instructionsPanel.style.opacity = '0';
-                instructionsPanel.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    instructionsPanel.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-                    instructionsPanel.style.opacity = '1';
-                    instructionsPanel.style.transform = 'translateY(0)';
-                }, 50);
-
-                setTimeout(() => {
-                    instructionsPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }, 100);
-
-            } catch (err) {
-                console.error(err);
-                showError("An error occurred while generating favicons.");
-            } finally {
-                generateBtn.innerHTML = originalBtnText;
-                generateBtn.disabled = false;
-                generateBtn.classList.remove('opacity-80', 'cursor-not-allowed');
-            }
-        });
-
-        function copyCode() {
-            const code = document.getElementById('html-code').innerText;
-            const btn = document.getElementById('copy-btn');
-            
-            navigator.clipboard.writeText(code).then(() => {
-                const originalHtml = btn.innerHTML;
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                btn.classList.remove('bg-slate-900', 'hover:bg-slate-800', 'text-slate-300');
-                btn.classList.add('bg-green-500/20', 'border-green-500/50', 'text-green-400');
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalHtml;
-                    btn.classList.add('bg-slate-900', 'hover:bg-slate-800', 'text-slate-300');
-                    btn.classList.remove('bg-green-500/20', 'border-green-500/50', 'text-green-400');
-                }, 2000);
-            });
-        }
-    </script>
+    <script src="assets/js/script.js"></script>
+    
 </body>
+
 </html>
