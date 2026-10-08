@@ -49,13 +49,18 @@
   header {
     position: relative;
     z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 22px 40px;
     border-bottom: 1px solid var(--border);
     background: rgba(245,243,239,.7);
     backdrop-filter: blur(12px);
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 22px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .logo {
     display: flex; align-items: center; gap: 10px;
@@ -488,20 +493,59 @@
   .queue-item:hover .item-fullscreen { opacity: 1; }
   .item-fullscreen.visible { display: flex; }
 </style>
+
+    <!-- Navbar styles & fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    .ak-navbar { position: sticky; top: 0; z-index: 9999; background-color: rgba(8, 12, 18, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #1e2d40; font-family: 'Outfit', sans-serif; }
+    .ak-navbar-container { max-width: 80rem; margin: 0 auto; padding: 0 1rem; }
+    @media (min-width: 640px) { .ak-navbar-container { padding: 0 1.5rem; } }
+    @media (min-width: 1024px) { .ak-navbar-container { padding: 0 2rem; } }
+    .ak-navbar-flex { display: flex; justify-content: space-between; align-items: center; height: 4rem; }
+    .ak-nav-brand { display: flex; align-items: center; gap: 0.75rem; color: #cbd5e1; text-decoration: none; transition: color 0.3s; }
+    .ak-nav-brand:hover { color: #ffffff; }
+    .ak-nav-icon { width: 2rem; height: 2rem; border-radius: 0.5rem; background: linear-gradient(to bottom right, #2563eb, #4f46e5); display: flex; align-items: center; justify-content: center; color: #ffffff; box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.2); transition: all 0.3s; }
+    .ak-nav-brand:hover .ak-nav-icon { box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4); }
+    .ak-nav-icon i { font-size: 0.875rem; }
+    .ak-nav-title { font-weight: 700; font-size: 1.125rem; letter-spacing: -0.025em; margin: 0;}
+    .ak-nav-badge { padding: 0.375rem 0.75rem; border-radius: 9999px; border: 1px solid rgba(99, 102, 241, 0.3); background-color: rgba(99, 102, 241, 0.1); color: #818cf8; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin:0;}
+    </style>
+
 </head>
 <body>
+
+<!-- Custom AK Navbar -->
+<nav class="ak-navbar">
+    <div class="ak-navbar-container">
+        <div class="ak-navbar-flex">
+            <a href="index.html" class="ak-nav-brand">
+                <div class="ak-nav-icon">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <span class="ak-nav-title">AK's Tools</span>
+            </a>
+            <div class="ak-nav-badge">
+                BG REMOVER V2
+            </div>
+        </div>
+    </div>
+</nav>
+
 
 <div class="blob blob-1"></div>
 <div class="blob blob-2"></div>
 
 <header>
-  <a class="logo" href="index.html">
+  <div class="header-inner">
+  <div class="logo">
     <div class="logo-icon">✨</div>
     Poof Eraser
-  </a>
+  </div>
   <div style="display:flex;align-items:center;gap:14px">
     <span class="badge">poof.bg API</span>
     <a class="header-link" href="https://docs.poof.bg" target="_blank">Docs ↗</a>
+  </div>
   </div>
 </header>
 
